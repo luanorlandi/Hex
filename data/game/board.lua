@@ -124,7 +124,7 @@ function Board:getHexagon(pos)
 	local row = math.floor(hexPos.y)
 	
 	if window.camera.zoomStatus == "out" then
-		hexPos.x = pos.x - self.start.x - window.resolution.x/2 + self.hexagonSize.x/2 - ((row - 1) * self.hexagonSize.x/2)
+		hexPos.x = pos.x - window.resolution.x/2 - self.start.x + self.hexagonSize.x/2 - ((row - 1) * self.hexagonSize.x/2)
 		hexPos.x = hexPos.x / self.hexagonSize.x
 	else
 		hexPos.x = pos.x - window.resolution.x/2 + (-self.start.x + self.hexagonSize.x/2 - ((row - 1) * self.hexagonSize.x/2) + cameraPos.x) / window.camera.zoom
