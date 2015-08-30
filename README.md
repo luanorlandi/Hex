@@ -10,7 +10,7 @@ O jogo foi desenvolvido na linguagem [Lua][Lua-sobre] e motor gráfico [MOAI][MOA
 
 O jogo pode ser baixado pelas seguintes maneiras:
 
-* [Source][Source-download]: Baixe o código fonte juntamente com as texturas e o [MOAI][MOAI-download] para executar o jogo
+* [Source][Source-download]: Baixe o código fonte juntamente com as texturas. Requer o [MOAI][MOAI-download]  instalado para executar o jogo
 
 * Alternativamente, baixe os arquivos executáveis da plataforma que desejar (basta colocar o arquivo na mesma basta do jogo e executá-lo): [Windows][Windows-download], [Linux][Linux-download] ou [OSX][OSX-download]
 
