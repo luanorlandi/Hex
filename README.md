@@ -29,7 +29,7 @@ Outra conclusão relevante é também o jogo em si, que se baseia em um jogo de tab
 [Lua-sobre]: http://www.lua.org/portugues.html
 [MOAI-download]: https://github.com/moai/moai-dev
 [Source-download]: https://github.com/luanorlandi/Hex/archive/master.zip
-[Android-download]: https://drive.google.com/file/d/0B4sAl8ui96CLdjUtR3NSV0VGc0U/view?usp=sharing
+[Android-download]: https://drive.google.com/file/d/0B4sAl8ui96CLNWRqM1pUYmVyOHc/view?usp=sharing
 [Windows-download]: https://drive.google.com/file/d/0B4sAl8ui96CLRTdoYU83R1BFVGM/view?usp=sharing
 [Linux-download]: https://drive.google.com/file/d/0B4sAl8ui96CLQ25scHF3WUxBWGs/view?usp=sharing
 [OSX-download]: https://drive.google.com/file/d/0B4sAl8ui96CLRjJaQ1ZBRG1vMzg/view?usp=sharing
