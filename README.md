@@ -16,7 +16,7 @@ O jogo pode ser baixado pelas seguintes maneiras:
 
 * Para [Android][Android-download], baixe e instale o .apk (o aplicativo não está oficialmente lançado com appid, ative a opção de desenvolvedor do Android)
 
-##Projeto de Iniciação Cietífica
+##Projeto de Iniciação Científica
 
 Em uma pesquisa de iniciação científica do aluno Luan Gustavo Orlandi do ICMC-USP, com orientação do professor Leandro Fiorini Aurichi e apoio do CNPq, foi desenvolvido o projeto Matemática e programação em Hex.
 
