@@ -35,4 +35,4 @@ Outra conclusão relevante é também o jogo em si, que se baseia em um jogo de tab
 [Windows-download]: https://drive.google.com/file/d/0B4sAl8ui96CLRTdoYU83R1BFVGM/view?usp=sharing
 [Linux-download]: https://drive.google.com/file/d/0B4sAl8ui96CLQ25scHF3WUxBWGs/view?usp=sharing
 [OSX-download]: https://drive.google.com/file/d/0B4sAl8ui96CLRjJaQ1ZBRG1vMzg/view?usp=sharing
-[Apostila-download]: https://drive.google.com/file/d/0B4sAl8ui96CLZ1F1ZXZBcFlSVk0/view?usp=sharing
+[Apostila-download]: https://drive.google.com/file/d/0B4sAl8ui96CLdU50NWFxZVFmR0k/view?usp=sharing
