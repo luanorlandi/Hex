@@ -8,13 +8,11 @@ O jogo foi desenvolvido na linguagem [Lua][Lua-sobre] e motor gráfico [MOAI][MOA
 
 ##Download
 
-O jogo pode ser baixado pelas seguintes maneiras:
+O jogo pode ser baixado pelas seguintes maneiras
 
 * [Source][Source-download]: Baixe o código fonte juntamente com as texturas. Requer o [MOAI][MOAI-download]  instalado para executar o jogo
 
-* Alternativamente, baixe os arquivos executáveis da plataforma que desejar (basta colocar o arquivo na mesma basta do jogo e executá-lo): [Windows][Windows-download], [Linux][Linux-download] ou [OSX][OSX-download]
-
-* Para [Android][Android-download], baixe e instale o .apk (o aplicativo não está oficialmente lançado com appid, ative a opção de desenvolvedor do Android)
+* Alternativamente, baixe em umas das versões disponíveis [aqui][Release-download]. Na versão Android ative a opção de desenvolvedor Android (o aplicaticativo ainda não tem lançamento oficial com appid)
 
 ##Projeto de Iniciação Científica
 
@@ -36,3 +34,4 @@ Outra conclusão relevante é também o jogo em si, que se baseia em um jogo de tab
 [Linux-download]: https://drive.google.com/file/d/0B4sAl8ui96CLQ25scHF3WUxBWGs/view?usp=sharing
 [OSX-download]: https://drive.google.com/file/d/0B4sAl8ui96CLRjJaQ1ZBRG1vMzg/view?usp=sharing
 [Apostila-download]: https://drive.google.com/file/d/0B4sAl8ui96CLdU50NWFxZVFmR0k/view?usp=sharing
+[Release-download]: https://github.com/luanorlandi/Hex/releases
