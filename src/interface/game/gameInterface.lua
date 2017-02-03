@@ -176,11 +176,7 @@ function GameInterface:openHowToPlayMenu()
 	pos = Vector:new(0, 0)
 	size = window.deckManager.mediumFont
 	
-	local file = io.open("file/comoJogar.txt", "r")
-	local text = file:read("*a")
-	io.close(file)
-	
-	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, text)
+	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, strings.howToPlay)
 end
 
 function GameInterface:openNewGameMenu()
@@ -214,11 +210,7 @@ function GameInterface:openNewGameMenu()
 	pos = Vector:new(0, 0)
 	size = window.deckManager.mediumFont
 	
-	local file = io.open("file/menuNovoJogo.txt", "r")
-	local text = file:read("*a")
-	io.close(file)
-	
-	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, text)
+	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, strings.menu)
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
@@ -235,11 +227,7 @@ function GameInterface:openNewGameMenu()
 	pos = Vector:new(0, 0)
 	size = window.deckManager.mediumFont
 	
-	local file = io.open("file/iniciarNovoJogo.txt", "r")
-	local text = file:read("*a")
-	io.close(file)
-	
-	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, text)
+	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, strings.startGame)
 	self.menu.texts[table.getn(self.menu.texts)]:setAlignment(MOAITextBox.RIGHT_JUSTIFY, MOAITextBox.RIGHT_JUSTIFY)
 	
 	-----------------------------------------------------------------------------------------------------------------

@@ -1,9 +1,0 @@
-Como jogar:
-
-    Hex é jogado com dois jogadores e tem um tabuleiro formado por hexágonos em que as bordas do tabuleiro possuem cores.
-
-    Os jogadores têm cores diferentes e cada um em seu turno escolhe um hexágono livre para sua jogada, deixando o hexágono selecionado com a sua cor.
-
-    O objetivo é completar um caminho de hexágonos adjacentes de mesma cor que liguem as bordas opostas do tabuleiro que correspondem à cor do jogador.
-
-Para mais informações sobre o jogo, acesse: https://github.com/luanorlandi/Hex

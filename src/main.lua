@@ -14,6 +14,8 @@ require "math/rectangle"
 require "math/circle"
 require "math/utils"
 
+require "file/saveLocation"
+require "file/strings"
 require "window/window"
 require "window/deckManager"
 require "window/camera"
