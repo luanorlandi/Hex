@@ -1,12 +1,10 @@
 --[[
--------------------------------------------------------------------
-Esse jogo nao tem fins comerciais e foi desenvolvido por Luan
-Gustavo Orlandi em um projeto de Iniciacao Cientifica no
-ICMC-USP, com orientacao de Leandro Fiorini Aurichi e apoio do
-CNPq.
--------------------------------------------------------------------
-versao 1.0
--------------------------------------------------------------------
+--------------------------------------------------------------------------------
+This is a free game developed by Luan Orlandi in project of scientific research
+at ICMC-USP, guided by Leandro Fiorini Aurichi and supported by CNPq
+
+For more information, access https://github.com/luanorlandi/Hex
+--------------------------------------------------------------------------------
 ]]
 
 MOAILogMgr.setLogLevel(MOAILogMgr.LOG_NONE)
