@@ -113,9 +113,13 @@ function Button:doAction()
 	
 		window.interface.gameInterface:openNewGameMenu()
 		
-	elseif self.type == "howToPlay" then
+	elseif self.type == "about" then
 	
-		window.interface.gameInterface:openHowToPlayMenu()
+		if MOAIEnvironment.osBrand ~= nil then
+			window.interface.gameInterface:openAbout()
+		else
+			window.interface.gameInterface:openWelcome()
+		end
 		
 	elseif self.type == "zoom" then
 	

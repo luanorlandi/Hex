@@ -1,14 +1,13 @@
 language["pt"] = {
-    name = "PORTUGUÊS",
+    name = "Português",
 
     startGame = "Iniciar jogo",
 
-    howToPlay = "Como jogar:\n\
-Hex é jogado com dois jogadores e tem um tabuleiro formado por hexágonos em que as bordas do tabuleiro possuem cores.\n\
-Os jogadores têm cores diferentes e cada um em seu turno escolhe um hexágono livre para sua jogada, deixando o hex�gono selecionado com a sua cor. \n\
-O objetivo é completar um caminho de hexágonos adjacentes de mesma cor que liguem as bordas opostas do tabuleiro que correspondem à cor do jogador.\n\
-Para mais informações sobre o jogo, acesse:\
-https://github.com/luanorlandi/Hex",
+    welcome = "Bem-vindo ao Hex!\n\
+Hex é um jogo de tabuleiro para dois jogadores.\n\
+Cada jogador possui uma cor, azul ou vermelho. As bordas do tabuleiro têm essas cores.\n\
+O objetivo é fazer um caminho de sua cor que ligue as bordas de mesma cor, impedindo que o oponente faça o mesmo.\n\
+Cada turno permite escolher um hexágono ainda não selecionado, em que é de cor branca.",
 
     gameOver = "Fim de jogo",
 

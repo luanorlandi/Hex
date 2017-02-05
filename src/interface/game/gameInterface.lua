@@ -14,10 +14,10 @@ function GameInterface:new()
 	G.textColor = Color:new(0.4, 0.4, 0.4)
 	
 	local pos, area = G:buttonPos(1)
-	G.newGameButton = Button:new(pos, area, "newGameButton", window.deckManager.newGameButton)
+	G.about = Button:new(pos, area, "about", window.deckManager.about)
 	
 	pos, area = G:buttonPos(2)
-	G.howToPlay = Button:new(pos, area, "howToPlay", window.deckManager.howToPlay)
+	G.newGameButton = Button:new(pos, area, "newGameButton", window.deckManager.newGameButton)
 	
 	pos, area = G:buttonPos(3)
 	G.zoomButton = Button:new(pos, area, "zoom", window.deckManager.zoomIn)
@@ -53,7 +53,7 @@ end
 
 function GameInterface:clear()
 	self.newGameButton:clear()
-	self.howToPlay:clear()
+	self.about:clear()
 	self.zoomButton:clear()
 	self.undoButton:clear()
 	
@@ -79,13 +79,13 @@ function GameInterface:buttonPos(n)
 end
 
 function GameInterface:calculateButtonsPos()
-	local pos, area = self:buttonPos(1)
+	pos, area = self:buttonPos(1)
+	self.about:setPos(pos)
+	self.about:setArea(area)
+
+	local pos, area = self:buttonPos(2)
 	self.newGameButton:setPos(pos)
 	self.newGameButton:setArea(area)
-	
-	pos, area = self:buttonPos(2)
-	self.howToPlay:setPos(pos)
-	self.howToPlay:setArea(area)
 	
 	pos, area = self:buttonPos(3)
 	self.zoomButton:setPos(pos)
@@ -109,8 +109,8 @@ function GameInterface:getButton(pos)
 	if self.newGameButton.available and self.newGameButton:checkSelect(pos) then
 		return self.newGameButton
 		
-	elseif self.howToPlay.available and self.howToPlay:checkSelect(pos) then
-		return self.howToPlay
+	elseif self.about.available and self.about:checkSelect(pos) then
+		return self.about
 	
 	elseif self.zoomButton.available and self.zoomButton:checkSelect(pos) then
 		return self.zoomButton
@@ -146,9 +146,9 @@ function GameInterface:swapUndoButton()
 	end
 end
 
-function GameInterface:openHowToPlayMenu()
+function GameInterface:openWelcome()
 	if self.menu ~= nil then
-		if self.menu.type == menuType["howToPlay"] then
+		if self.menu.type == menuType["welcome"] then
 			-- se essa janela ja estava aberta, fecha ela apenas
 			self.menu:clear()
 			self.menu = nil
@@ -160,7 +160,7 @@ function GameInterface:openHowToPlayMenu()
 	end
 	
 	-- janela do menu
-	self.menu = Menu:new(menuType["howToPlay"])
+	self.menu = Menu:new(menuType["welcome"])
 	
 	-- icone de fechar a janela
 	local pos = Vector:new(0.78, 0.74)			-- proporcao em relacao a janela
@@ -176,7 +176,21 @@ function GameInterface:openHowToPlayMenu()
 	pos = Vector:new(0, 0)
 	size = window.deckManager.mediumFont
 	
-	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, strings.howToPlay)
+	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, strings.welcome)
+end
+
+function GameInterface:openAbout()
+	if(MOAIEnvironment.osBrand == "Windows") then
+
+		os.execute("start " .. strings.url)
+
+	elseif(MOAIEnvironment.osBrand == "Android") then
+
+		if(MOAIBrowserAndroid.canOpenURL(strings.url)) then
+			MOAIBrowserAndroid.openURL(strings.url)
+		end
+
+	end
 end
 
 function GameInterface:openNewGameMenu()

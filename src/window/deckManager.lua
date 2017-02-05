@@ -45,8 +45,8 @@ function DeckManager:new()
 	D.newGameButton = MOAIGfxQuad2D.new()
 	D.newGameButton:setTexture("texture/interface/options.png")
 	
-	D.howToPlay = MOAIGfxQuad2D.new()
-	D.howToPlay:setTexture("texture/interface/howToPlay.png")
+	D.about = MOAIGfxQuad2D.new()
+	D.about:setTexture("texture/interface/about.png")
 	
 	D.zoomIn = MOAIGfxQuad2D.new()
 	D.zoomIn:setTexture("texture/interface/zoomIn.png")
@@ -159,12 +159,12 @@ function DeckManager:resizeGameDecks()
 	
 	-- icones do jogo
 	if window.interface.gameInterface ~= nil then
+		self.about:setRect(-window.interface.gameInterface.buttonSize.x, -window.interface.gameInterface.buttonSize.y,
+							 window.interface.gameInterface.buttonSize.x,  window.interface.gameInterface.buttonSize.y)
+
 		self.newGameButton:setRect(-window.interface.gameInterface.buttonSize.x, -window.interface.gameInterface.buttonSize.y,
 							 window.interface.gameInterface.buttonSize.x,  window.interface.gameInterface.buttonSize.y)
-							 
-		self.howToPlay:setRect(-window.interface.gameInterface.buttonSize.x, -window.interface.gameInterface.buttonSize.y,
-							 window.interface.gameInterface.buttonSize.x,  window.interface.gameInterface.buttonSize.y)
-							 
+			
 		self.zoomIn:setRect(-window.interface.gameInterface.buttonSize.x, -window.interface.gameInterface.buttonSize.y,
 							 window.interface.gameInterface.buttonSize.x,  window.interface.gameInterface.buttonSize.y)
 							 
@@ -187,10 +187,10 @@ function DeckManager:resizeGameDecks()
 							  size.x * window.scale,  size.y * window.scale)
 			end
 			
-				self.blackScreen:setRect(-window.interface.gameInterface.menu.highlightSize * window.scale,
-										 -window.interface.gameInterface.menu.highlightSize * window.scale,
-										  window.interface.gameInterface.menu.highlightSize * window.scale,
-										  window.interface.gameInterface.menu.highlightSize * window.scale)
+			self.buttonHighlight:setRect(-window.interface.gameInterface.menu.highlightSize * window.scale,
+										-window.interface.gameInterface.menu.highlightSize * window.scale,
+										window.interface.gameInterface.menu.highlightSize * window.scale,
+										window.interface.gameInterface.menu.highlightSize * window.scale)
 		end
 	end
 end

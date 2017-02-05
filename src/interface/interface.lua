@@ -29,6 +29,11 @@ end
 
 function Interface:createGameInterface()
 	self.gameInterface = GameInterface:new()
+
+	if (not firstGame) and self:welcomeDisplay() then
+		firstGame = true
+		self.gameInterface:openWelcome()
+	end
 end
 
 function Interface:reposition()
@@ -48,4 +53,34 @@ function Interface:getButton(pos)
 	if self.gameInterface ~= nil then
 		return self.gameInterface:getButton(newPos)
 	end
+end
+
+function Interface:welcomeDisplay()
+	-- return true or false if should display the welcome window
+
+	local path = locateSaveLocation()
+
+	-- probably a unexpected host (like html)
+	if path == nil then
+		return true
+	end
+
+	local file = io.open(path .. "/welcome.lua", "r")
+	local v = nil
+
+	if file ~= nil then
+		v = file:read()
+		io.close(file)
+	end
+
+	if v == nil or v ~= version then
+		-- overwrite game version
+		file = io.open(path .. "/welcome.lua", "w")
+		file:write(version)
+		io.close(file)
+
+		return true
+	end
+
+	return false
 end

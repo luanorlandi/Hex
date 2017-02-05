@@ -79,7 +79,7 @@ function GameLoop:start()
 		board.lane[turn.waitingPlayer.myPath]:blendOut()
 		
 		window.interface:createGameInterface()
-		
+
 		bot = AI:new(player2.myPath, player1.myPath)
 		
 		newGame = NewGame:new()

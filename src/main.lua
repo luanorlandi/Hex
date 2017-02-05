@@ -7,6 +7,9 @@ For more information, access https://github.com/luanorlandi/Hex
 --------------------------------------------------------------------------------
 ]]
 
+version = "1.1.0"
+firstGame = false
+
 MOAILogMgr.setLogLevel(MOAILogMgr.LOG_NONE)
 
 require "math/vector"

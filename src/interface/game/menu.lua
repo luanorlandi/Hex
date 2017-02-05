@@ -3,12 +3,12 @@ Menu.__index = Menu
 
 menuType = {
 	["newGame"] = 1,
-	["howToPlay"] = 2,
+	["welcome"] = 2,
 	["gameOver"] = 3,
 }
 
 function Menu:new(type)
--- "menuType" eh qual o menu, ex howToPlay, newGame
+-- "menuType" eh qual o menu, ex welcome, newGame
 	local M = {}
 	setmetatable(M, Menu)
 	
