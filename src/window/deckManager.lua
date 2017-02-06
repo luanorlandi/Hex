@@ -14,10 +14,10 @@ function DeckManager:new()
 	
 	-- intro decks
 	D.deckLua = MOAIGfxQuad2D.new()
-	D.deckLua:setTexture("texture/logo/lua.jpg")
+	D.deckLua:setTexture("texture/logo/lua.png")
 	
 	D.deckMOAI = MOAIGfxQuad2D.new()
-	D.deckMOAI:setTexture("texture/logo/moai.jpg")
+	D.deckMOAI:setTexture("texture/logo/moai.png")
 	
 	D.whiteScreen = MOAIGfxQuad2D.new()
 	D.whiteScreen:setTexture("texture/effect/whitescreen.png")
@@ -124,11 +124,11 @@ function DeckManager:resizeDecks()
 end
 
 function DeckManager:resizeIntroDecks()
-	self.deckLua:setRect(-window.resolution.x/2, -window.resolution.y/2,
-						  window.resolution.x/2,  window.resolution.y/2)
+	self.deckLua:setRect(-window.scale * 200, -window.scale * 200,
+						  window.scale * 200, window.scale * 200)
 	
-	self.deckMOAI:setRect(-window.resolution.x/2, -window.resolution.y/2,
-						   window.resolution.x/2,  window.resolution.y/2)
+	self.deckMOAI:setRect(-window.scale * 250, -window.scale * 250,
+						   window.scale * 250, window.scale * 250)
 	
 	self.whiteScreen:setRect(-window.resolution.x/2, -window.resolution.y/2,
 							  window.resolution.x/2,  window.resolution.y/2)
