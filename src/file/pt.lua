@@ -1,7 +1,7 @@
 language["pt"] = {
     name = "Português",
 
-    startGame = "Iniciar jogo",
+    startGame = "Iniciar novo jogo",
 
     welcome = "Bem-vindo ao Hex!\n\
 Hex é um jogo de tabuleiro para dois jogadores.\n\

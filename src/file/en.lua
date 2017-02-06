@@ -1,7 +1,7 @@
 language["en"] = {
     name = "English",
 
-    startGame = "Start game",
+    startGame = "Start new game",
 
     welcome = "Welcome to Hex!\n\
 Hex is a board game for two players.\n\

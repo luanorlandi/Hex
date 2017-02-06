@@ -63,8 +63,14 @@ function GameInterface:clear()
 end
 
 function GameInterface:calculateButtonsSize()
-	self.buttonSize = Vector:new(30 * window.scale, 30 * window.scale)
-	self.gapSize = 14 * window.scale
+	local unit = window.scale
+
+	if unit > 1 then
+		unit = 1
+	end
+
+	self.buttonSize = Vector:new(30 * unit, 30 * unit)
+	self.gapSize = 15 * unit
 end
 
 function GameInterface:buttonPos(n)
@@ -164,7 +170,7 @@ function GameInterface:openWelcome()
 	
 	-- icone de fechar a janela
 	local pos = Vector:new(0.78, 0.74)			-- proporcao em relacao a janela
-	local size = Vector:new(25, 25)
+	local size = Vector:new(self.buttonSize.x, self.buttonSize.y)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	
@@ -210,7 +216,7 @@ function GameInterface:openNewGameMenu()
 	
 	-- icone de fechar a janela
 	local pos = Vector:new(0.78, 0.74)			-- proporcao em relacao a janela
-	local size = Vector:new(25, 25)
+	local size = Vector:new(self.buttonSize.x, self.buttonSize.y)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	
@@ -360,7 +366,7 @@ function GameInterface:openNewGameMenu()
 	
 	-- icone de iniciar um novo jogo
 	local pos = Vector:new(0.63, -0.5)			-- proporcao em relacao a janela
-	local size = Vector:new(45, 45)
+	local size = Vector:new(50, 50)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	
