@@ -5,23 +5,22 @@ AI = {}
 AI.__index = AI
 
 function AI:new(myPath, opponentPath)
--- cria uma inteligencia articial
--- "myPath" horizontal ou vertical
+	-- create an artificial intelligence
+	-- "myPath" is horizontal or vertical
 	local A = {}
 	setmetatable(A, AI)
 	
-	-- se o jogador desfazer a jogada eh ativado
-	--  a flag, cancelando a analise do bot
+	-- if the player undo his move, this is will be set true
 	A.cancelAnalysis = false
 	
 	A.myPath = myPath
 	
-	-- auxiliares de analise, "hex" contem os hexagonos disponiveis analisados
-	-- "hexPoints" contem a pontuacao atribuida para o hexagono
+	-- aid the analysis, "hex" has the hexagons available to be analyzed
+	-- "hexPoints" has the assigned score for the hexagon
 	A.hex = {}
 	A.hexPoints = {}
 	
-	-- atributo que ajuda a calcular os pontos em proximidade do centro
+	-- aid to calculate score in center proximity
 	A.boardCenter = A:getBoardCenter()
 	
 	if myPath == victoryPath["horizontal"] then
@@ -35,18 +34,18 @@ function AI:new(myPath, opponentPath)
 	A.myBoardPath = BoardPath:new(myPath, myPath)
 	A.opponentBoardPath = BoardPath:new(opponentPath, myPath)
 	
-	-- essa quantia limita o numero de dijkstra
-	-- executa esse numero maximo de hexagonos que serao analisados usando dijkstra por turno
-	A.qtyAnalysisBoardPath = 30				-- esse numero aumenta conforme o decorrer dos turnos
+	-- limit dijkstra amount
+	-- execute this maximum number of hexagons to be analyzed using dijkstra per turn
+	A.qtyAnalysisBoardPath = 30				-- this is increased per turn
 	
-	-- valores iniciais para ajustar a prioridade de cada analise
+	-- starting values to adjust priority of each analyse
 	A.scoreMultiplierCenter = math.ceil((board.size.x + board.size.y) / 2)
 	A.scoreMultiplierAdjacency = 0.2
 	A.scoreMultiplierMyBoardPath = 0.4
 	A.scoreMultiplierOpponentBoardPath = 0.5
 	A.scoreMultiplierFavorablePath = 3
 	
-	A.scoreMultiplierAdvantage = 2				-- quem estiver ganhando recebe aumento de valor na analise
+	A.scoreMultiplierAdvantage = 2				-- who is winning receives increased analyse value
 	A.scoreMultiplierDistance = 80
 	A.scoreMultiplierDifferenceDistances = 5
 	A.scoreAdderPathCompleteLink = 500
@@ -60,12 +59,11 @@ function AI:new(myPath, opponentPath)
 	A.scoreAdderFarAdjacentNotFree = 3
 	A.scoreAdderFarAdjacentOnEdge = 2
 	
-	
 	-- debug
 	A.texts = {}
 	A.duration = nil
 	
-	-- se eh o bot quem inicia o primeiro turno, ativa o turno do bot
+	-- if the bot play the first turn, enable bot turn
 	if turn.mode == gameMode["bot"] and player2.myTurn == playerTurn["first"] then
 		local botTurnCoroutine = MOAICoroutine.new()
 		botTurnCoroutine:run(startAIturn)
@@ -75,7 +73,7 @@ function AI:new(myPath, opponentPath)
 end
 
 function AI:getBoardCenter()
--- retorna uma matriz dos hexagonos com valores mais altos perto do centro
+	-- return a matrix of hexagons with higher values close to center
 	local row = 0
 	local column = 0
 	
@@ -118,12 +116,12 @@ function AI:getBoardCenter()
 end
 
 function AI:analyzeBoard()
--- analise a situacao no tabuleiro, atribuindo valores em hexPoints
--- valores altos indicam que o respectivo hexagono eh uma boa jogada pela analise
+	-- analyse board situation, giving values in hexPoints
+	-- high values indicates that the hexagon is a good move by the analyse
 
-	--local start = os.clock()		-- inica contagem do tempo
+	--local start = os.clock()		-- start counting time
 	
-	-- reseta os valores
+	-- reset values
 	self.hex = {}
 	self.hexPoints = {}
 	
@@ -159,22 +157,22 @@ function AI:analyzeBoard()
 	-- debug
 	--if not (self.cancelAnalysis) then self:showPoints() end
 	
-	-- analise que valoriza as jogadas que reduzem
-	-- o seu caminho minimo e aumenta o do oponente
+	-- analyse to value moves that reduces my minimum path
+	-- and increase the opponent's' path
 	if not (self.cancelAnalysis) then
 		self:analyzeBoardPath()
 	end
 	
-	-- se a analise foi rapida e o jogador ainda pode desfazer a jogada
-	-- ocorre o loop abaixo esperando que a jogada nao possa mais ser desfeita
+	-- if the analyse was fast and the player can still undo his move
+	-- make a loop to wait undo limit time
 	while turn.inUndo and not (self.cancelAnalysis) do
 		coroutine.yield()
 	end
 	
-	--local ending = os.clock()					-- finaliza contagem
-	--self:showAnalysisDuration(ending - start)	-- mostra duracao a analise
+	--local ending = os.clock()					-- end counting time
+	--self:showAnalysisDuration(ending - start)	-- show analyse duration
 	
-	-- atualiza valorizacao em cada tipo de analise
+	-- update evaluation in each analyse type
 	if not (self.cancelAnalysis) then
 		self:updateMultipliers()
 	end
@@ -192,7 +190,7 @@ function AI:analyzeCenter(hex)
 end
 
 function AI:analyzeAdjacency(hex)
-	-- hexagonos adjacentes:
+	-- adjacent hexagons:
 	local upperLeft =		board:getUpperLeftHexagon(hex)
 	local upperRight =		board:getUpperRightHexagon(hex)
 	local right =			board:getRightHexagon(hex)
@@ -200,7 +198,7 @@ function AI:analyzeAdjacency(hex)
 	local bottomLeft =		board:getBottomLeftHexagon(hex)
 	local left =			board:getLeftHexagon(hex)
 	
-	-- hexagonos adjacentes longes:
+	-- far adjacent hexagons:
 	local farUpperLeft =	board:getFarUpperLeftHexagon(hex)
 	local farUpper =		board:getFarUpperHexagon(hex)
 	local farUpperRight =	board:getFarUpperRightHexagon(hex)
@@ -210,7 +208,7 @@ function AI:analyzeAdjacency(hex)
 	
 	local score = 0
 	
-	-- analisa cada adjacencia para o hexagono
+	-- analyse each adjacency for the hexagon
 	local tmpPoints = 0
 	
 	tmpPoints = tmpPoints + self:analyzeFarAdjacency(farUpperLeft, left, upperLeft)
@@ -218,7 +216,7 @@ function AI:analyzeAdjacency(hex)
 	tmpPoints = tmpPoints + self:analyzeFarAdjacency(farBottomRight, right, bottomRight)
 	tmpPoints = tmpPoints + self:analyzeFarAdjacency(farBottomLeft, bottomLeft, left)
 	
-	-- caso seja uma adjacencia mais favoravel a sua direcao horizontal, aumenta os pontos
+	-- if is a favorable adjacency to my horizontal path, increase score
 	if self.myPath == victoryPath["horizontal"] then
 		tmpPoints = self.scoreMultiplierFavorablePath * tmpPoints
 	end
@@ -230,7 +228,7 @@ function AI:analyzeAdjacency(hex)
 	tmpPoints = tmpPoints + self:analyzeFarAdjacency(farUpper, upperLeft, upperRight)
 	tmpPoints = tmpPoints + self:analyzeFarAdjacency(farBottom, bottomRight, bottomLeft)
 	
-	-- caso seja uma adjacencia mais favoravel a sua direcao vertical, aumenta os pontos
+	-- if is a favorable adjacency to my vertical path, increase score
 	if self.myPath == victoryPath["vertical"] then
 		tmpPoints = self.scoreMultiplierFavorablePath * tmpPoints
 	end
@@ -244,28 +242,28 @@ function AI:analyzeFarAdjacency(farHex, adjacentHex1, adjacentHex2)
 	local score = 0
 	
 	if adjacentHex1 ~= nil then
-	-- adjacente nao esta numa borda
+		-- adjacent it is not in a edge
 		if adjacentHex1.hold ~= 0 then
-		-- adjacente nao esta livre
+			-- adjacent is not free
 			score = score + self.scoreAdderHexAdjacentNotFree
 		end
 	end
 	
 	if adjacentHex2 ~= nil then
-	-- adjacente nao esta numa borda
+		-- adjacent it is not in a edge
 		if adjacentHex2.hold ~= 0 then
-		-- adjacente nao esta livre
+			-- adjacent is not free
 			score = score + self.scoreAdderHexAdjacentNotFree
 		end
 	end
 	
 	if farHex == nil then
-	-- adjacente distante esta numa borda
+		-- far adjacent is in the edge
 		score = score + self.scoreAdderFarAdjacentOnEdge
 	else
-	-- adjacente distante nao esta numa borda
+		-- far adjacent is not in the edge
 		if farHex.hold ~= 0 then
-		-- adjacente distante nao esta livre
+			-- far adjacent is not free
 			score = score + self.scoreAdderFarAdjacentNotFree
 		end
 	end
@@ -277,16 +275,16 @@ function AI:analyzeBoardPath()
 	local qtyHexAnalyzing = table.getn(self.hex)
 	
 	if qtyHexAnalyzing > self.qtyAnalysisBoardPath then
-		-- limita a analise executar somente em hexagonos que ja possuem os valores mais altos 
+		-- limit analyse to execute only in hexagons which has high scores
 		
 		quickSortTwoArrays(self.hexPoints, self.hex, 1, qtyHexAnalyzing)
 		qtyHexAnalyzing = self.qtyAnalysisBoardPath
 	end
 	
-	-- busca pelo seu melhor caminho atual
+	-- search for my best current path
 	local path, distance, pathLink = self.myBoardPath:searchBestPath()
 	
-	-- busca pelo melhor caminho atual do oponente
+	-- search for opponent's best current path
 	local opponentPath, opponentDistance, opponentPathLink = self.opponentBoardPath:searchBestPath()
 	
 	local advantage = 1
@@ -316,49 +314,49 @@ function AI:analyzeBoardPath()
 end
 
 function AI:analyzeMyBoardPath(hex, path, distance, pathLink)
--- analisa o quanto melhora o caminho se o hexagono for selecionado
--- "hex" hexagono sendo avaliado
--- "path" caminho atual
--- "distance" distancia atual para completar o caminho
--- "pathLink" hexagonos que completam o caminho
+	-- analyse how much improve the path if the hexagon is selected
+	-- "hex" hexagon being evaluated
+	-- "path" current path
+	-- "distance" current distance to complete the path
+	-- "pathLink" hexagons that completes the path
 	
 	local score = 0
 	
 	if distance ~= nil then
-	-- caso haja ao menos um hexagono do jogador ja colocado no tabuleiro, havera uma distancia
+		-- if there is at least one hexagon of the player in the board, it will have a distance
 		if distance > 0 then
-		-- o caminho nao esta completo, verifica o quanto diminui a distancia jogando na posicao de "hex"
+		-- the path is not compelted, check how much decrease the distance playing in position "hex"
 			local newPath, newDistance, newPathLink = self.myBoardPath:calculateNewDistance(hex, path[1])
 			
 			if newDistance < self.myBoardPath.graph.infinity then
 				if distance < self.myBoardPath.graph.infinity then
-					-- se as duas distancias serem validas, calcula a pontuacao
+					-- if both distance is valid, calculate the score
 					score = score + self.scoreMultiplierDistance * (self.myBoardSize - newDistance)
 					score = score + self.scoreMultiplierDifferenceDistances * (distance - newDistance)
 				else
-					-- se a distancia inicial era infinita, e apos a jogada nao eh mais
-					-- entao calcula de forma diferente a pontuacao
+					-- if the starting distance was infinite, and after the move it's not anymore
+					-- then calculate the score in a different
 					score = score + self.scoreMultiplierDistance
 				end
 				
 				local pathLinkDifference = table.getn(pathLink) - table.getn(newPathLink)
 				score = score + self.scoreMultiplierLinkAmount * pathLinkDifference
 			else
-				-- senao desconsidera essa analise
+				-- else discard this analyse
 				return 0
 			end
 			
 			if distance > self.myBoardSize then
-			-- caso a distance seja maior do que o proprio tabuleiro
-			-- desvaloriza a analise, deixando a analise do outro jogador mais importante
-			
+				-- if the distance in higher than the board size
+				-- devalue the analyse, making the opponent's analyse more important
+
 				if distance - self.myBoardSize > 2 then
 					score = math.floor(score / (distance - self.myBoardSize))
 				end
 			end
 		else
-		-- distance = 0, situacao em que o caminho esta quase completo
-		-- valoriza os hexagonos que completam o caminho
+			-- distance = 0, situation that the path is almost complete
+			-- evaluate the hexagons that completes the path
 		
 			for i = 1, table.getn(pathLink), 1 do
 				local hexLink = pathLink[i]
@@ -370,9 +368,9 @@ function AI:analyzeMyBoardPath(hex, path, distance, pathLink)
 		end
 		
 		if distance <= 1 then
-		-- verifica se para o hexagono "hex" eh o unico que
-		-- falta para completar o caminho totalmente
-		-- evitando jogadas que prolongue a partida
+			-- check if the hexagon "hex" it is the last
+			-- one to complete the path totally, avoiding
+			-- plays that extend the match
 			
 			board.hexGrid[self.myPath]:setElement(hex.row, hex.column)
 			
@@ -388,28 +386,28 @@ function AI:analyzeMyBoardPath(hex, path, distance, pathLink)
 end
 
 function AI:analyzeOpponentBoardPath(hex, path, distance, pathLink)
--- analisa o quanto melhora o caminho do oponente se o hexagono fosse selecionado pelo oponente
--- "hex" hexagono sendo avaliado
--- "path" caminho atual
--- "distance" distancia atual para completar o caminho
--- "pathLink" hexagonos que completam o caminho
+	-- analyse how much improve the opponent's path if the hexagon is selected by the opponent
+	-- "hex" hexagon being evaluated
+	-- "path" current path
+	-- "distance" current distance to complete the path
+	-- "pathLink" hexagons that completes the path
 	
 	local score = 0
 	
 	if distance ~= nil then
-	-- caso haja ao menos um hexagono do jogador ja colocado no tabuleiro, havera uma distancia
+		-- if there is at least one hexagon of the player in the board, it will have a distance
 		if distance > 0 then
-		-- o caminho nao esta completo, verifica o quanto diminui a distancia jogando na posicao de "hex"
+			-- the path is not compelted, check how much decrease the distance playing in position "hex"
 			local newPath, newDistance, newPathLink = self.opponentBoardPath:calculateNewDistance(hex, path[1])
 
 			if newDistance < self.opponentBoardPath.graph.infinity then
 				if distance < self.opponentBoardPath.graph.infinity then
-					-- se as duas distancias serem validas, calcula a pontuacao
+					-- if both distance is valid, calculate the score
 					score = score + self.scoreMultiplierDistance * (self.myBoardSize - newDistance)
 					score = score + self.scoreMultiplierDifferenceDistances * (distance - newDistance)
 				else
-					-- se a distancia inicial era infinita, e apos a jogada nao eh mais
-					-- entao calcula de forma diferente a pontuacao
+					-- if the starting distance was infinite, and after the move it's not anymore
+					-- then calculate the score in a different
 					score = score + self.scoreMultiplierDistance
 				end
 				
@@ -417,20 +415,22 @@ function AI:analyzeOpponentBoardPath(hex, path, distance, pathLink)
 				score = score + self.scoreMultiplierLinkAmount * pathLinkDifference
 			
 			else
-				-- senao desconsidera essa analise
+				-- else discard this analyse
 				return 0
 			end
 			
 			if distance > self.myBoardSize then
-			-- caso a distance seja maior do que o proprio tabuleiro
-			-- desvaloriza a analise, deixando a analise do outro jogador mais importante
+				-- if the distance in higher than the board size
+				-- devalue the analyse, making the opponent's analyse more important
 			
 				if distance - self.myBoardSize > 2 then
 					score = math.floor(score / (distance - self.myBoardSize))
 				end
 			end
 		end
-		-- caso a distancia ja ser 0, entao nao ha como impedir o oponente de completar o caminho
+
+		-- if the distance is already 0
+		-- there is no way to prevent the opponent from completing the path
 	end
 	
 	return score
@@ -471,7 +471,7 @@ function AI:updateMultipliers()
 end
 
 function AI:selectMove()
--- retorna um hexagono de melhor jogada analisada
+	-- return the best hexagon found by the analyse
 	local hightest = 0
 	local hex = self.hex[1]
 	
@@ -490,7 +490,7 @@ function AI:startTurn()
 	self:analyzeBoard()
 	
 	if not (self.cancelAnalysis) then
-	-- se nao foi desfeita a jogada do jogador, o bot faz sua jogada
+		-- if the move was not undone, the bot make his move
 		local hex = self:selectMove()
 		
 		turn:performTurn(hex)
@@ -502,7 +502,7 @@ function AI:startTurn()
 end
 
 function AI:showPoints()
--- funcao para debug
+	-- debug function
 	local font = MOAIFont.new ()
 	font:loadFromTTF("font/zekton free.ttf", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'", 25)
 	
@@ -532,7 +532,7 @@ function AI:showPoints()
 end
 
 function AI:showAnalysisDuration(duration)
--- funcao para debug
+	-- debug function
 	local font = MOAIFont.new ()
 	font:loadFromTTF("font/zekton free.ttf", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'.", 25)
 	

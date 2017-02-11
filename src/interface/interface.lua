@@ -43,10 +43,10 @@ function Interface:reposition()
 end
 
 function Interface:getButton(pos)
--- procura se ha um botao na interface na posicao "pos"
--- retorna ele ou nil caso nao encontrar
+	-- search for a button in position "pos"
+	-- return it or nil
 	local newPos = Vector:new(pos.x, -pos.y)
-	local windowCorner = Vector:new(-window.resolution.x/2, window.resolution.y/2)		-- canto superior esquerdo
+	local windowCorner = Vector:new(-window.resolution.x/2, window.resolution.y/2)		-- top left corner
 	
 	newPos:sum(windowCorner)
 	

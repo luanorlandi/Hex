@@ -4,8 +4,7 @@ Circle = {}
 Circle.__index = Circle
 
 function Circle:new(c, r)
-	-- cria um circulo com centro na posicao "c", e raio de tamanho "r"
-	
+	-- create a circle with center in position "c", and radius size "r"
 	local C = {}
 	setmetatable(C, Circle)
 	
@@ -22,9 +21,9 @@ function Circle:equal(b)
 end
 
 function Circle:pointInside(p)
-	-- verifica se ha o ponto "p" dentro do circulo
+	-- check if there is a point "p" inside the circle
 	
-	-- calcula a distancia do centro ao ponto
+	-- calculate the distance from the center to point "p"
 	local distanceX = math.abs(self.center.x - p.x)
 	local distanceY = math.abs(self.center.y - p.y)
 	

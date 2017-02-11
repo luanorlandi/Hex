@@ -5,7 +5,7 @@ function NewGame:new()
 	local N = {}
 	setmetatable(N, NewGame)
 	
-	-- valores iniciais sao iguais ao da partida atual
+	-- initial values are equal to the current match
 	N.boardSize = Vector:new(board.size.x, board.size.y)
 	N.player1name = tostring(player1.name)
 	N.player2name = tostring(player2.name)

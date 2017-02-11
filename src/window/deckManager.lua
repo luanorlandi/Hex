@@ -1,14 +1,14 @@
 DeckManager = {}
 DeckManager.__index = DeckManager
 
--- gerencia os o tamanho dos decks e fontes
--- de acordo com o tamanho da janela
+-- manage the deck size and fonts
+-- related to the window size
 
 function DeckManager:new()
 	local D = {}
 	setmetatable(D, DeckManager)
 	
-	-- indica quais decks devem ser redimensionados
+	-- indicate which decks must be resized
 	D.intro = false
 	D.game = false
 	
@@ -22,7 +22,7 @@ function DeckManager:new()
 	D.whiteScreen = MOAIGfxQuad2D.new()
 	D.whiteScreen:setTexture("texture/effect/whitescreen.png")
 	
-	-- desenho de fundo, hexagonos e faixa
+	-- background art, hexagons and lane
 	D.boardBackground = MOAIGfxQuad2D.new()
 	D.boardBackground:setTexture("texture/background/gameBackground.png")
 	
@@ -41,7 +41,7 @@ function DeckManager:new()
 	D.buttonHighlight = MOAIGfxQuad2D.new()
 	D.buttonHighlight:setTexture("texture/effect/buttonHighlight.png")
 	
-	-- icones
+	-- buttons
 	D.newGameButton = MOAIGfxQuad2D.new()
 	D.newGameButton:setTexture("texture/interface/options.png")
 	
@@ -90,7 +90,7 @@ function DeckManager:new()
 	D.startNewGame = MOAIGfxQuad2D.new()
 	D.startNewGame:setTexture("texture/interface/startNewGame.png")
 	
-	-- tamanho das fontes
+	-- fonts size
 	D.smallFont = 20
 	D.mediumFont = 28
 	D.bigFont = 40
@@ -99,7 +99,7 @@ function DeckManager:new()
 	20 * window.scale
 	25 * window.scale]]
 	
-	-- fontes
+	-- fonts
 	D.fontArial = MOAIFont.new ()
 	D.fontArial:loadFromTTF("font/arial.ttf", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-ãõç", D.smallFont)
 	
@@ -110,8 +110,8 @@ function DeckManager:new()
 end
 
 function DeckManager:resizeDecks()
-	-- quando o tamanho da janela for alterado, atualiza as dimensoes dos decks
-	
+	-- when the window size is altered, update deck sizes
+
 	window.interface:reposition()
 	
 	if self.intro then
@@ -139,25 +139,25 @@ function DeckManager:resizeGameDecks()
 	self.boardBackground:setRect(-window.resolution.x/2, -window.resolution.y/2,
 								  window.resolution.x/2,  window.resolution.y/2)
 	
-	-- hexagonos do tabuleiro
+	-- board hexagons
 	if board ~= nil then
 		board:moveHexagons()
 		self.hexagon:setRect(-board.hexagonSize.x/2, -board.hexagonSize.y/2,
 							  board.hexagonSize.x/2,  board.hexagonSize.y/2)
 	
-	-- faixas dos jogadores
+	-- player lanes
 	self.lane:setRect(-2 * window.resolution.x,-((board.size.y - 1) * 1.5) * (1 / 4 * board.hexagonSize.y),
 					   2 * window.resolution.x, ((board.size.y - 1) * 1.5) * (1 / 4 * board.hexagonSize.y))
 	end
 	
-	-- janela de menu
+	-- window menu
 	self.menuBackground:setRect(-window.resolution.x/2, -window.resolution.y/2,
 								  window.resolution.x/2,  window.resolution.y/2)
 								  
 	self.smallMenuBackground:setRect(-window.resolution.x/2, -window.resolution.y/2,
 								  window.resolution.x/2,  window.resolution.y/2)
 	
-	-- icones do jogo
+	-- game buttons
 	if window.interface.gameInterface ~= nil then
 		self.about:setRect(-window.interface.gameInterface.buttonSize.x, -window.interface.gameInterface.buttonSize.y,
 							 window.interface.gameInterface.buttonSize.x,  window.interface.gameInterface.buttonSize.y)
@@ -177,7 +177,7 @@ function DeckManager:resizeGameDecks()
 		self.redo:setRect(-window.interface.gameInterface.buttonSize.x, -window.interface.gameInterface.buttonSize.y,
 						   window.interface.gameInterface.buttonSize.x,  window.interface.gameInterface.buttonSize.y)
 		
-		-- icones do menu
+		-- menu buttons
 		if window.interface.gameInterface.menu ~= nil then
 			for i = 1, table.getn(window.interface.gameInterface.menu.buttons) do
 				local size = window.interface.gameInterface.menu.buttonSize[i]

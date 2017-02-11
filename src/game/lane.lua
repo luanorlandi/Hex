@@ -4,7 +4,7 @@ Lane = {}
 Lane.__index = Lane
 
 function Lane:new(path)
-	-- "path" direcao da faixa
+	-- "path" lane direction
 	
 	local L = {}
 	setmetatable(L, Lane)
@@ -42,11 +42,12 @@ function Lane:blendIn()
 		self.action:stop()
 	end
 	
-	self.action = self.sprite:seekColor(self.color.red,
-										self.color.green,
-										self.color.blue,
-										self.color.alpha,
-										self.blendDuration)
+	self.action = self.sprite:seekColor(
+		self.color.red,
+		self.color.green,
+		self.color.blue,
+		self.color.alpha,
+		self.blendDuration)
 end
 
 function Lane:blendOut()
@@ -54,9 +55,10 @@ function Lane:blendOut()
 		self.action:stop()
 	end
 	
-	self.action = self.sprite:seekColor(self.color.red,
-										self.color.green,
-										self.color.blue,
-										0.5 * self.color.alpha,
-										self.blendDuration)
+	self.action = self.sprite:seekColor(
+		self.color.red,
+		self.color.green,
+		self.color.blue,
+		0.5 * self.color.alpha,
+		self.blendDuration)
 end

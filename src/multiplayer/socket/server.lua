@@ -11,7 +11,7 @@ function Server:new()
 	
 	S.socket = nil
 	
-	-- um cliente que vai se conectar
+	-- a client that will connect
 	S.clientSocket = nil
 	S.clientName = nil
 	
@@ -70,7 +70,7 @@ function Server:acceptClient()
 end
 
 function Server:sendData(data)
-	-- envia "data" no socket
+	-- send "data" in socket
 	if self.clientSocket ~= nil then
 		self.clientSocket:send(data)
 		print("dados enviados: ", data)
@@ -80,8 +80,8 @@ function Server:sendData(data)
 end
 
 function Server:receiveData()
-	-- retorna "data" recebido do cliente
-	
+	-- return "data" from client
+
 	if self.clientSocket ~= nil then
 		print("aguardando dados...")
 		return self.clientSocket:receive()

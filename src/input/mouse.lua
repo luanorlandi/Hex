@@ -1,4 +1,4 @@
--- esta funcao indica a posicao do cursor
+-- indicate cursor position
 function onMouseMoveEvent(x, y)
 	input.pointerPos.x = x
 	input.pointerPos.y = y

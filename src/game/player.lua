@@ -18,11 +18,12 @@ function Player:new(name, myPath, myTurn)
 	P.myPath = myPath
 	P.myTurn = myTurn
 	
-	-- guarda o ultimo hexagono escolhido
+	-- save the last hexagon chosen
 	P.lastMove = nil
-	P.colorLastMove = Color:new(P.color.red * 0.70,
-								P.color.green * 0.70,
-								P.color.blue * 0.70)
+	P.colorLastMove = Color:new(
+		P.color.red * 0.70,
+		P.color.green * 0.70,
+		P.color.blue * 0.70)
 	
 	return P
 end

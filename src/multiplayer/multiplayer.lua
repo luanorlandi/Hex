@@ -12,14 +12,14 @@ function Multiplayer:new()
 	
 	M.timeOut = 0.001
 	
-	-- objeto que pode ser o cliente ou servidor(cliente host), nele ha o socket
+	-- can be a clint or server (client host), it has a socket
 	M.client = nil
 	
 	return M
 end
 
 function Multiplayer:startServer()
-	-- inicia como host
+	-- start as host
 	self.client = Server:new()
 	local open = self.client:open(65739)
 	local accepted = self.client:acceptClient()
@@ -32,7 +32,7 @@ function Multiplayer:startServer()
 end
 
 function Multiplayer:connectToServer()
-	-- inicia como cliente
+	-- start as client
 	self.client = Client:new()
 	local connected = self.client:connect("192.168.0.100", 65739)
 	
@@ -44,7 +44,7 @@ function Multiplayer:connectToServer()
 end
 
 function Multiplayer:readOpponent()
--- cria uma corotina de ficar escutando o socket do outro jogador
+	-- create a coroutine to listen the other player socket
 	self.client:setTimeOut(self.timeOut)
 
 	local readSocketCoroutine = MOAICoroutine.new()

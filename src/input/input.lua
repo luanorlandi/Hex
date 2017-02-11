@@ -13,10 +13,10 @@ function Input:new()
 	I.pointerPos = Vector:new(0, 0)
 	I.pointerPressed = false
 	
-	-- objeto (botao ou hexagono) que esta selecionado no momento
+	-- object (button or haxagon) that is currently selected
 	I.selection = nil
 	
-	-- flag que impede selecionar algo caso tenha pressionado num lugar vazio
+	-- flag that prevent selecting anything in case pressed in a empty space
 	I.pointerPressedCancel = false
 	
 	return I
@@ -45,11 +45,10 @@ function Input:dealWithPointerPressed()
 	if not (window.camera:isInMovement()) then
 	
 	if self.pointerPressed then
-	-- pressionado
 		if not (self.pointerPressedCancel) then
-		-- evita que selecione algo apartir no click/tap em uma posicao vazia
+			-- avoid select anything from a click/tap in a empty space
 			if self.selection == nil then
-			-- se nao houver nada selecionado, procura se pressionou em algo valido
+				-- if there is nothing selected, search for a press in something valid
 				self.selection = window.interface:getButton(input.pointerPos)
 				
 				if self.selection == nil and
@@ -59,14 +58,14 @@ function Input:dealWithPointerPressed()
 				end
 				
 				if self.selection ~= nil then
-				-- se selecionou algo, entao mostra para o jogador
+					-- if selected something, then show to the player
 					self.selection:showSelect()
 				else
-				-- nao selecionou nada, entao cancela outras selecoes possiveis neste click/tap
+					-- selected nothing, then cancel possible click/tap selections
 					self.pointerPressedCancel = true
 				end
 			else
-			-- se ja tem algo selecionado, verifica se manteve pressionado nele
+				-- if already has something selected, check if kept pressed in it
 				local selection
 				
 				selection = window.interface:getButton(input.pointerPos)
@@ -78,39 +77,39 @@ function Input:dealWithPointerPressed()
 				end
 				
 				if selection ~= self.selection then
-				-- deseleciona o anterior, e seleciona o outro
+					-- unselect the previous, and select the other
 					self.selection:showDeselect()
 					self.selection = selection
 					
 					if self.selection ~= nil then
-					-- se trocou por outra coisa, mostra ela selecionada
+						-- if changed to something else, show it
 						self.selection:showSelect()
 					end
 				end
 			end
 		end
 	else
-	-- nao pressionado
+		-- didn't press it
 		if self.selection ~= nil then
-		-- se houver algo selecionado
+			-- check if there is something selected
 			if self.selection.name == "hexagon" then
-			-- eh um hexagono
+				-- is a hexagon
 				if self.selection.available then
 					turn:makeMove(self.selection)
 				end
 			end
 			
 			if self.selection.name == "button" then
-			-- eh um botao
+				-- is a button
 				self.selection:doAction()
 			end
 			
-			-- limpa o que foi selecionado
+			-- clear what was selected
 			self.selection:showDeselect()
 			self.selection = nil
 		end
 		
-		-- desativa a flag
+		-- disable the flag
 		self.pointerPressedCancel = false
 	end
 	

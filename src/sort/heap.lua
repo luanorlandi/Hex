@@ -1,13 +1,13 @@
 Heap = {}
 Heap.__index = Heap
 
--- usado para fila de prioridade
+-- used for priority queue
 function Heap:new()
 	local H = {}
 	setmetatable(H, Heap)
 	
-	-- os 2 possuem sempre o mesmo tamanho
-	-- para cada chave ha uma respectiva prioridade
+	-- both has the same size
+	-- for each key, there is a respective priority
 	H.key = {}
 	H.priority = {}
 	
@@ -23,7 +23,7 @@ function Heap:isEmpty()
 end
 
 function Heap:siftDown(i)
-	local j = 2 * i					-- filho da esquerda
+	local j = 2 * i					-- left child
 
 	if j <= table.getn(self.key) then
         if j + 1 <= table.getn(self.key) then
@@ -42,7 +42,7 @@ function Heap:siftDown(i)
 end
 
 function Heap:siftUp(i)
-	local j = math.floor(i / 2)		-- pai
+	local j = math.floor(i / 2)		-- parent
 
 	if j > 0 and self.priority[i] < self.priority[j] then
 		swap(self.key, i, j)
@@ -71,8 +71,8 @@ function Heap:extractMin()
 	local key = self:getKey(1)
 	local priority = self.priority[1]
 	
-	-- coloca a ultima posicao em primeiro
-	-- evita remover elementos que causem o deslocamento de todo o array
+	-- put the last position first
+	-- avoid remove elements that may cause displacement on the array
 	
 	self.key[1] = self.key[table.getn(self.key)]
 	self.priority[1] = self.priority[table.getn(self.priority)]
@@ -80,15 +80,13 @@ function Heap:extractMin()
 	table.remove(self.key, table.getn(self.key))
 	table.remove(self.priority, table.getn(self.priority))
 	
-	-- evita remover elementos que causem o deslocamento de todo o array
-	
 	self:siftDown(1)
 
 	return key, priority
 end
 
 function Heap:getKey(i)
--- retorna a key da maneira apropriada para o jogo sem perder o valor
+	-- return the key in a proper way for the game without the valor
 	local key = Vector:new(self.key[i].x, self.key[i].y)
 	
 	return key

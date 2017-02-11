@@ -1,27 +1,26 @@
 --[[
-- essa classe cria um grid do MOAI para realizar
-o pathfinding
+this class creates a MOAI gridto make the path finding
 
-- nela o tabuleiro esta girado 90 graus
+the board is rotated 90 degrees
 
-- ha uma borda que possui elementos preenchidos dos 
-jogadores para facilitar o pathfinding
+there is border that has the hexagons already owned by
+the players to easy the path finding
 
-- a cada turno o grid deve ser atualizado tambem
+at each turn the grid must also be updated
 
-- cada jogador tem seu grid, pois o caminho somente
-depende se o valor eh nulo ou nao
+each player has it's own grid, because the path matters only
+for a value nil or not
 ]]
 
 HexGrid = {}
 HexGrid.__index = HexGrid
 
 function HexGrid:new(size, direction)
-	-- direction eh os lados que devem seguir o caminho
+	-- direction is the side to follow the path
 	local H = {}
 	setmetatable(H, HexGrid)
 	
-	-- inclui a borda de cada lado
+	-- include a border in each side
 	H.size = Vector:new(size.x + 2, size.y + 2)
 	H.width = math.ceil(H.size.y / 2)
 	H.height = H.size.x * 2 + (H.size.y / 2 - 1) * 2
@@ -46,13 +45,13 @@ function HexGrid:reset()
 	end]]
 	
 	if self.direction == victoryPath["horizontal"] then
-		-- borda da esquerda e direita
+		-- left and right border
 		for i = 1, self.size.y, 1 do
 			self:setElementNoEdge(i, 1)
 			self:setElementNoEdge(i, self.size.y)
 		end
 	else
-		-- borda de cima e baixo
+		-- top and bottom border
 		for i = 1, self.size.y, 1 do
 			self:setElementNoEdge(1, i)
 			self:setElementNoEdge(self.size.x, i)
@@ -61,9 +60,9 @@ function HexGrid:reset()
 end
 
 function HexGrid:matrixToGrid(row, column)
--- coverte as coordenadas da matriz para grid
+	-- convert the coordinates of matrix to grid
 
-	-- inclui a borda
+	-- include the border
 	row = row + 1
 	column = column + 1
 	
@@ -74,11 +73,11 @@ function HexGrid:matrixToGrid(row, column)
 end
 
 function HexGrid:gridToMatrix(column, row)
--- converte as coordenadas de grid para matriz
+	-- convert the coordinates of grid to matrix
 	local matrixRow = 2 * column - (row % 2)
 	local matrixColumn = math.ceil(row / 2) - column + 1
 	
-	-- inclui a borda
+	-- include the border
 	matrixRow = matrixRow + 1
 	matrixColumn = matrixColumn + 1
 	
@@ -86,29 +85,29 @@ function HexGrid:gridToMatrix(column, row)
 end
 
 function HexGrid:setElement(row, column)
--- atribui um elemento recebendo coordenada de matriz
+	-- assign an element from a matrix coordinate
 	column, row = self:matrixToGrid(row, column)
 	
 	self.grid:setTile(column, row, 1)
 end
 
 function HexGrid:getElement(row, column)
--- pega o valor de um elemento recebido com coordenada de matriz
+	-- return the value of an element from a matrix coordinate
 	column, row = self:matrixToGrid(row, column)
 	
 	return self.grid:getTile(column, row)
 end
 
 function HexGrid:resetElement(row, column)
--- atribui um elemento com 0 recebendo coordenada de matriz
+	-- assign an element with 0 from a matrix coordinate
 	column, row = self:matrixToGrid(row, column)
 	
 	self.grid:setTile(column, row, 0)
 end
 
--- sem borda ----------------------------------------
+-- borderless ----------------------------------------
 function HexGrid:matrixToGridNoEdge(row, column)
--- coverte as coordenadas da matriz para grid
+	-- convert the coordinates of matrix to grid
 	local gridRow = row + 2 * (column - 1)
 	local gridColumn = math.floor((row + 1) / 2)
 	
@@ -116,7 +115,7 @@ function HexGrid:matrixToGridNoEdge(row, column)
 end
 
 function HexGrid:gridToMatrixNoEdge(column, row)
--- converte as coordenadas de grid para matriz
+	-- convert the coordinates of grid to matrix
 	local matrixRow = 2 * column - (row % 2)
 	local matrixColumn = math.ceil(row / 2) - column + 1
 	
@@ -124,14 +123,14 @@ function HexGrid:gridToMatrixNoEdge(column, row)
 end
 
 function HexGrid:setElementNoEdge(row, column)
--- atribui um elemento recebendo coordenada de matriz
+	-- assign an element from a matrix coordinate
 	column, row = self:matrixToGridNoEdge(row, column)
 	
 	self.grid:setTile(column, row, 1)
 end
 
 function HexGrid:getElementNoEdge(row, column)
--- pega o valor de um elemento recebido com coordenada de matriz
+	-- return the value of an element from a matrix coordinate
 	column, row = self:matrixToGridNoEdge(row, column)
 	
 	return self.grid:getTile(column, row)
@@ -140,7 +139,7 @@ end
 -----------------------------------------------------
 
 function HexGrid:printGrid()
--- usado para debug
+	-- debug
 	for i = 1, self.size.x, 1 do
 		for j = 1, self.size.y, 1 do
 			io.write(self:getElementNoEdge(i, j) .. " ")
@@ -157,7 +156,7 @@ function HexGrid:printGrid()
 end
 
 function HexGrid:findPath()
-	-- tenta encontrar um caminho, se houver retorna true
+	-- try to find a path, return true if found one
 	local startNode = self.grid:getCellAddr(self:matrixToGridNoEdge(1, 1))
 	local endNode = self.grid:getCellAddr(self:matrixToGridNoEdge(self.size.x, self.size.y))
 
@@ -190,7 +189,7 @@ function HexGrid:findPath()
 end
 
 function HexGrid:copyGrid()
--- retorna uma copia do grid atual
+	-- return a copy of the current grid
 	local grid = MOAIGrid.new()
 	grid = MOAIGrid.new()
 	grid:initHexGrid(self.width, self.height)

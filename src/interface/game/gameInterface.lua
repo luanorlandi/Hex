@@ -21,20 +21,20 @@ function GameInterface:new()
 	
 	pos, area = G:buttonPos(3)
 	G.zoomButton = Button:new(pos, area, "zoom", window.deckManager.zoomIn)
-	G.currentZoom = "in"					-- guarda qual eh a o botao atual do zoom
+	G.currentZoom = "in"					-- save which zoom button currently is
 	
 	pos, area = G:buttonPos(4)
 	G.undoButton = Button:new(pos, area, "undo", window.deckManager.undo)
 	G.undoButton:setAvailable(false)
-	G.currentUndo = "undo"					-- guarda qual eh a o botao atual de undo ou redo
+	G.currentUndo = "undo"					-- save which undo/redo button currently is
 	
-	-- janela de menu, se for nil indica que nao ha nenhuma aberta
+	-- menu window, if it's nil, there is none open
 	G.menu = nil
 	
-	-- posicoes dos botao de escolha de um novo jogo
-	-- valores em relacao ao tamanho da janela,
-	-- sendo 1 em x e y o canto de cima direito e 0 em e y o centro
-	
+	-- positions of buttons in new game
+	-- values related to screen size,
+	-- (1, 1) is the top right corner, (0, 0) the center
+
 	G.posBoardSize7x7 = Vector:new(-0.60, 0.40)
 	G.posBoardSize9x9 = Vector:new(-0.15, 0.40)
 	G.posBoardSize11x11 = Vector:new(0.30, 0.40)
@@ -74,8 +74,7 @@ function GameInterface:calculateButtonsSize()
 end
 
 function GameInterface:buttonPos(n)
-	-- determina a posicao e area do botao de acordo com o new
-	-- quanto maior for, mais longe esta
+	-- determinate the position and button area for "n" value
 	
 	local pos = Vector:new(window.resolution.x/2 - self.gapSize - self.buttonSize.x,
 						   window.resolution.y/2 - n * self.gapSize - (2 * n - 1) * self.buttonSize.y)
@@ -125,13 +124,13 @@ function GameInterface:getButton(pos)
 		return self.undoButton
 		
 	elseif self.menu ~= nil then
-	-- caso tenha um menu, procura em cada um dos botoes do menu
+		-- if there is a menu, search for each of the buttons
 		return self.menu:getButton(pos)
 	end
 end
 
 function GameInterface:swapZoomButton()
--- troca o deck do zoomIn com zoomOut
+	-- swap the deck of zoomIn to zoomOut
 	if self.currentZoom == "in" then
 		self.zoomButton:changeDeck(window.deckManager.zoomOut)
 		self.currentZoom = "out"
@@ -142,7 +141,7 @@ function GameInterface:swapZoomButton()
 end
 
 function GameInterface:swapUndoButton()
--- troca o deck do undo com redo
+	-- swap the deck of zoomOut to zoomIn
 	if self.currentUndo == "undo" then
 		self.undoButton:changeDeck(window.deckManager.redo)
 		self.currentUndo = "redo"
@@ -155,7 +154,7 @@ end
 function GameInterface:openWelcome()
 	if self.menu ~= nil then
 		if self.menu.type == menuType["welcome"] then
-			-- se essa janela ja estava aberta, fecha ela apenas
+			-- if the window was already open, close it
 			self.menu:clear()
 			self.menu = nil
 			
@@ -165,10 +164,10 @@ function GameInterface:openWelcome()
 		end
 	end
 	
-	-- janela do menu
+	-- menu window
 	self.menu = Menu:new(menuType["welcome"])
 	
-	-- icone de fechar a janela
+	-- button to close the window
 	local pos = Vector:new(0.78, 0.74)			-- proporcao em relacao a janela
 	local size = Vector:new(self.buttonSize.x, self.buttonSize.y)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
@@ -176,7 +175,7 @@ function GameInterface:openWelcome()
 	
 	self.menu:newButton(pos, area, "close", window.deckManager.close, size)
 	
-	-- texto de como jogar
+	-- text
 	local rectBottomLeft = Vector:new(-0.39, -0.38)
 	local rectTopRight = Vector:new(0.39, 0.38)
 	pos = Vector:new(0, 0)
@@ -202,7 +201,7 @@ end
 function GameInterface:openNewGameMenu()
 	if self.menu ~= nil then
 		if self.menu.type == menuType["newGame"] then
-			-- se essa janela ja estava aberta, fecha ela apenas
+			-- if the window was already open, close it
 			self.menu:clear()
 			self.menu = nil
 			
@@ -214,8 +213,8 @@ function GameInterface:openNewGameMenu()
 	
 	self.menu = Menu:new(menuType["newGame"])
 	
-	-- icone de fechar a janela
-	local pos = Vector:new(0.78, 0.74)			-- proporcao em relacao a janela
+	-- button to close the window
+	local pos = Vector:new(0.78, 0.74)			-- related to window size
 	local size = Vector:new(self.buttonSize.x, self.buttonSize.y)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
@@ -224,7 +223,7 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- texto de escolher as opcoes
+	-- text describing the options
 	local rectBottomLeft = Vector:new(-0.39, -0.38)
 	local rectTopRight = Vector:new(0.39, 0.38)
 	pos = Vector:new(0, 0)
@@ -234,14 +233,14 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- quadrados de destaque para a opcao selecionada
+	-- highlight square of the selected option
 	self.menu:newHighlight(Vector:new(1.0, 0.85))
 	self.menu:newHighlight(Vector:new(1.0, 0.45))
 	self.menu:newHighlight(Vector:new(1.1, 0.75))
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- texto de iniciar novo jogo
+	-- text to start new game
 	local rectBottomLeft = Vector:new(-0.39, -0.38)
 	local rectTopRight = Vector:new(0.39, 0.38)
 	pos = Vector:new(0, 0)
@@ -252,8 +251,8 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- icone do tabuleiro 7x7
-	pos = self.posBoardSize7x7			-- proporcao em relacao a janela
+	-- button of 7x7 board
+	pos = self.posBoardSize7x7			-- related to window size
 	size = Vector:new(85, 85)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
@@ -266,8 +265,8 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- icone do tabuleiro 9x9
-	pos = self.posBoardSize9x9			-- proporcao em relacao a janela
+	-- button of 9x9 board
+	pos = self.posBoardSize9x9			-- related to window size
 	size = Vector:new(85, 85)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
@@ -280,8 +279,8 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- icone do tabuleiro 11x11
-	pos = self.posBoardSize11x11			-- proporcao em relacao a janela
+	-- button of 11x11 board
+	pos = self.posBoardSize11x11			-- related to window size
 	size = Vector:new(85, 85)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
@@ -294,8 +293,8 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- icone de pessoa x pessoa
-	pos = self.posGameMode1			-- proporcao em relacao a janela
+	-- button human x human
+	pos = self.posGameMode1			-- related to window size
 	size = Vector:new(90, 45)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
@@ -308,8 +307,8 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- icone de pessoa x ia
-	pos = self.posGameMode2			-- proporcao em relacao a janela
+	-- button human x ai
+	pos = self.posGameMode2			-- related to window size
 	size = Vector:new(90, 45)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
@@ -322,8 +321,8 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- icone de ai x pessoa
-	pos = self.posGameMode3			-- proporcao em relacao a janela
+	-- button ai x human
+	pos = self.posGameMode3			-- related to window size
 	size = Vector:new(90, 45)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
@@ -336,8 +335,8 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- icone de jogador na horizontal comeca no primeiro turno
-	pos = self.posStartingPlayer1			-- proporcao em relacao a janela
+	-- button horizontal starting player
+	pos = self.posStartingPlayer1			-- related to window size
 	size = Vector:new(100, 100)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
@@ -350,8 +349,8 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- icone de jogador na vertical comeca no primeiro turno
-	pos = self.posStartingPlayer2			-- proporcao em relacao a janela
+	-- button vertical starting player
+	pos = self.posStartingPlayer2			-- related to window size
 	size = Vector:new(100, 100)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
@@ -364,8 +363,8 @@ function GameInterface:openNewGameMenu()
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
-	-- icone de iniciar um novo jogo
-	local pos = Vector:new(0.63, -0.5)			-- proporcao em relacao a janela
+	-- button start new game
+	local pos = Vector:new(0.63, -0.5)			-- related to window size
 	local size = Vector:new(50, 50)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
@@ -374,8 +373,7 @@ function GameInterface:openNewGameMenu()
 end
 
 function GameInterface:openGameOverMenu(winner)
--- "winner" jogador que venceu a partida
-
+	-- "winner" player that won the match
 	if self.menu ~= nil then
 		self.menu:clear()
 		self.menu = nil
@@ -383,15 +381,15 @@ function GameInterface:openGameOverMenu(winner)
 	
 	self.menu = Menu:new(menuType["gameOver"])
 	
-	-- icone de fechar a janela
-	local pos = Vector:new(0.30, 0.26)			-- proporcao em relacao a janela
+	-- button close window
+	local pos = Vector:new(0.30, 0.26)			-- related to window size
 	local size = Vector:new(25, 25)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	
 	self.menu:newButton(pos, area, "close", window.deckManager.close, size)
 	
-	-- texto de como jogar
+	-- text
 	local rectBottomLeft = Vector:new(-0.16, -0.12)
 	local rectTopRight = Vector:new(0.16, 0.12)
 	pos = Vector:new(0, 0)
@@ -402,6 +400,7 @@ function GameInterface:openGameOverMenu(winner)
 	
 	if winner.myPath == victoryPath["vertical"] then
 		-- se foi o vermelho/vertical que venceu, le a proxima linha
+		-- if was red/vertical that won, read next line
 		
 		text = file:read("*l")
 	end

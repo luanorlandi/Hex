@@ -7,18 +7,18 @@ function BoardPath:new(pathDirection, owner)
 	local B = {}
 	setmetatable(B, BoardPath)
 	
-	B.pathDirection = pathDirection			-- caminho na vertical ou horizontal
-	B.owner = owner							-- caminho do jogador que esta avaliando (a IA)
+	B.pathDirection = pathDirection			-- vertical or horizontal path
+	B.owner = owner							-- player path that is evaluating (AI)
 	
-	-- contem os hexagonos que formam o caminho
+	-- has the hexagons to form the path
 	B.paths = {}
 	
-	-- contem um numero que indica a distancia ate o caminho completar
+	-- has a number to indicate the distance to complete the path
 	B.distanceToWin = {}
-	
-	-- contem os hexagonos que terminam o respectivo caminho
-	-- somente eh util se o caminho estiver quase completo,
-	-- para a IA jogar onde ha as ligacoes do caminho
+
+	-- has the hexagons that finish the path	
+	-- only useful if the path is almost complete
+	-- to make the AI play in the connections
 	B.pathLinks = {}
 	
 	B.graph = Graph:new(B.pathDirection)
@@ -27,26 +27,26 @@ function BoardPath:new(pathDirection, owner)
 end
 
 function BoardPath:resetSearch()
-	-- reseta o auxiliar de visitado
+	-- reset visited hexagons
 	for i = 1, board.size.y, 1 do
 		for j = 1, board.size.x, 1 do
 			board.hexagon[i][j].visited = false
 		end
 	end
 	
-	-- limpa os caminhos anteriores encontrados
+	-- clear the previous paths found
 	self.paths = {}
 	
-	--limpa as distancias calculadas
+	-- clear calculated distances
 	self.distanceToWin = {}
 	
-	--limpa os hexagonos de ligacao para o caminho
+	-- clear the connection hexagons
 	self.pathLinks = {}
 end
 
 function BoardPath:searchBestPath()
--- procura por todos os caminhos existentes para o jogador
--- retorna o melhor caminho e sua respectiva distancia
+	-- search for all possible paths for the player
+	-- return the best path and his distance
 	self:resetSearch()
 	
 	for i = 1, board.size.y, 1 do
@@ -54,7 +54,7 @@ function BoardPath:searchBestPath()
 			local hex = board.hexagon[i][j]
 			
 			if not hex.visited and hex.hold == self.pathDirection then
-				-- marca que o hexagono ja foi visitado
+				-- mark the ehxagon as visited
 				hex.visited = true
 				
 				local path = {}
@@ -62,14 +62,14 @@ function BoardPath:searchBestPath()
 				
 				table.insert(path, hex)
 				
-				-- inicia uma recursao a procura do caminho nesse hexagono
+				-- start a recursion to search a in this hexagon
 				self:getPathFromHexagon(path, pathLink, hex)
 				
-				-- calcula a distancia em hexagonos que faltam para completar o caminho
+				-- calculate the distance in hexagon that last to complete the path
 				local distance = self:calculateDistancePathComplete(path)
 				table.insert(self.distanceToWin, distance)
 				
-				-- inclui o novo caminho encontrado e seus hexagonos de ligacoes com os demais caminhos
+				-- include the new path found and his connection hexagons
 				table.insert(self.paths, path)
 				table.insert(self.pathLinks, pathLink)
 			end
@@ -80,10 +80,10 @@ function BoardPath:searchBestPath()
 end
 
 function BoardPath:calculateNewDistance(hexNew, hexSource)
--- "hexNew" eh o hexagono que sera analisado numa jogada simulada
+	-- "hexNew" is the hexagon that will be analyzed in a simulated move
 
--- a funcao simula a jogada na posicao dada como entrada
--- retornando a nova distancia e a quantidade de hexagono que fazem ligacoes no caminho
+	-- this method simulate the move given in the arguments
+	-- return the new distance and the amount of hexagons that make connections in the path
 	hexNew:setTemporaryHex(self.pathDirection)
 	self.graph:update()
 	
@@ -103,7 +103,8 @@ function BoardPath:calculateNewDistance(hexNew, hexSource)
 			board.hexagon[i][j].visited = false
 		end
 	end
-	-- inicia uma recursao a procura do caminho nesse hexagono
+
+	-- start a recursion to seach the path in this hexagon
 	self:getPathFromHexagon(path, pathLink, hexSource)
 	
 	hexNew:resetHex()
@@ -115,9 +116,9 @@ function BoardPath:calculateNewDistance(hexNew, hexSource)
 end
 
 function BoardPath:getPathFromHexagon(path, pathLink, hex)
--- funcao recursiva que constroi um caminho formado a partir de um hexagono
+	-- recursive function that build a path from a hexagon
 
-	-- hexagonos adjacentes:
+	-- adjacent hexagon:
 	local upperLeft =		board:getUpperLeftHexagon(hex)
 	local upperRight =		board:getUpperRightHexagon(hex)
 	local right =			board:getRightHexagon(hex)
@@ -132,7 +133,7 @@ function BoardPath:getPathFromHexagon(path, pathLink, hex)
 	self:getAdjacencyPath(path, pathLink, bottomLeft)
 	self:getAdjacencyPath(path, pathLink, left)
 	
-	-- hexagonos adjacentes longes:
+	-- far adjacent hexagons
 	local farUpperLeft =	board:getFarUpperLeftHexagon(hex)
 	local farUpper =		board:getFarUpperHexagon(hex)
 	local farUpperRight =	board:getFarUpperRightHexagon(hex)
@@ -150,19 +151,19 @@ end
 
 function BoardPath:getAdjacencyPath(path, pathLink, adjacentHex)
 	if adjacentHex ~= nil and not adjacentHex.visited and adjacentHex.hold == self.pathDirection then
-		-- marca que o hexagono ja foi visitado
+		-- mark that the hexagon was aldeary visited
 		adjacentHex.visited = true
 		
 		table.insert(path, adjacentHex)
-		
-		-- continua recursivamente a procura de um hexagono proximo
+
+		-- continue recursively	the search for the next hexagon
 		self:getPathFromHexagon(path, pathLink, adjacentHex)
 	end
 end
 
 function BoardPath:getFarAdjacencyPath(path, pathLink, farHex, adjacentHex1, adjacentHex2)
--- verifica para o caso de um hexagono adjacente distante, em que o caminho
--- pode ser ligado no proximo turno independente da jogada do oponente
+	-- check for the far adjacent hexagon, that the path can be
+	-- connected in the next turn independently of the oponnent's next move
 
 	if farHex ~= nil and not farHex.visited and farHex.hold == self.pathDirection then
 		if adjacentHex1.available and adjacentHex2.available then
@@ -173,18 +174,18 @@ function BoardPath:getFarAdjacencyPath(path, pathLink, farHex, adjacentHex1, adj
 			table.insert(pathLink, adjacentHex1)
 			table.insert(pathLink, adjacentHex2)
 			
-			-- continua recursivamente a procura de um hexagono proximo
+			-- continue recursively	the search for the next hexagon
 			self:getPathFromHexagon(path, pathLink, farHex)
 		end
 	else
-	-- verifica se o adjacente distante esta proximo da borda e existem os adjacentes
+		-- check if the far adjacent is close to the edge and exist the adjacent
 		if farHex == nil and adjacentHex1 ~= nil and adjacentHex2 ~= nil then
 		
-		-- verifica se os adjacentes estao livres
+			-- check if the adjacents are free
 			if adjacentHex1.available and adjacentHex2.available then
-			
-				-- verifica se os adjacentes sao da borda do jogador (borda vertical ou horizontal)
-				-- caso sejam, adiciona eles ao caminho de ligacao
+
+				-- check if the adjacents are the player edge (horizontal or vertical)
+				-- if they are, add it to the connection path
 				if self.pathDirection == victoryPath["horizontal"] then
 					if adjacentHex1.column == adjacentHex2.column then
 						table.insert(pathLink, adjacentHex1)
@@ -214,7 +215,7 @@ function BoardPath:calculateDistancePathComplete(path)
 end
 
 function BoardPath:getBestPath()
--- procura qual caminho tem a menor distancia
+	-- search which path has the lesser distance
 	local shortestDistance = self.distanceToWin[1]
 	local path = self.paths[1]
 	local pathLink = self.pathLinks[1]

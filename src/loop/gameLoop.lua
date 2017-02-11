@@ -27,13 +27,13 @@ GameLoop = {}
 GameLoop.__index = GameLoop
 
 function GameLoop:new(boardSize, player1name, player2name, mode, myPath, myTurn)
--- gerencia as definições da partida
--- "boardSize" tamanho do tabuleiro, padrao 11x11
--- "mode" modo de jogo: local, online ou bot
--- "myPath" fazer caminho na horizontal ou vertical para ganhar
--- "myTurn" joga no primeiro ou no segundo turno
+	-- manage the match definitions
+	-- "boardSize" default is 11x11
+	-- "mode" local, online ou bot
+	-- "myPath" path to win, horizontal or vertical
+	-- "myTurn" play first or second
 
--- "my" eh relacao ao jogador 1, "opponent" em relacao ao 2, podendo este ser um bot
+	-- "my" related to player 1, "oponnent" in relation to 2 (this can be a bot)
 
 	local G = {}
 	setmetatable(G, GameLoop)

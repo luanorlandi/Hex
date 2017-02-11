@@ -97,7 +97,7 @@ function writeResolutionFile(resolution)
 end
 
 function onEventValueChanged(key, value)
--- funcao callback, se o tamanho da janela mudar, ela eh chamada
+	-- callback function, if the window size change, call it
 	
 	if value > 0 then
 		--[[if key == "horizontalResolution" then

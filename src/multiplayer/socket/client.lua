@@ -16,7 +16,7 @@ function Client:new()
 end
 
 function Client:connect(adress, port)
-	-- realiza uma tentativa de conexao, retornando true caso sucesso
+	-- try to make a connection, return true for success
 	if self.socket == nil then
 		print("tentando conectar...")
 		self.socket, errorMsg = socket.connect(adress, port)
@@ -57,7 +57,7 @@ function Client:setTimeOut(number)
 end
 
 function Client:sendData(data)
-	-- envia "data" no socket
+	-- send "data" in socket
 	if self.socket ~= nil then
 		self.socket:send(data)
 		print("dados enviados: ", data)
@@ -67,8 +67,8 @@ function Client:sendData(data)
 end
 
 function Client:receiveData()
-	-- retorna "data" recebido do servidor
-	
+	-- return "data" from server
+
 	if self.socket ~= nil then
 		print("aguardando dados...")
 		return self.socket:receive()

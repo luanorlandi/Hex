@@ -8,7 +8,7 @@ menuType = {
 }
 
 function Menu:new(type)
--- "menuType" eh qual o menu, ex welcome, newGame
+-- "menuType" is which menu: welcome, newGame
 	local M = {}
 	setmetatable(M, Menu)
 	
@@ -21,14 +21,14 @@ function Menu:new(type)
 	if not (type == menuType["gameOver"]) then
 		M.background:setDeck(window.deckManager.menuBackground)
 	else
-		-- se o menu for o de game over, cria uma janela menor
+		-- if game over menu, create a smaller window
 		M.background:setDeck(window.deckManager.smallMenuBackground)
 	end
 	
 	M.background:setLoc(0, 0)
 	window.interface.layer:insertProp(M.background)
 	
-	-- tabelas que contem todos os textos e botoes da janela
+	-- tables that has all texts and buttons on window
 	M.texts = {}
 	M.textRectBottomLeft = {}
 	M.textRectTopRight = {}
@@ -40,7 +40,7 @@ function Menu:new(type)
 	M.buttonSize = {}
 	M.buttonPos = {}
 	
-	-- destaque nos botoes de escolha
+	-- buttons highlight
 	M.highlights = {}
 	M.highlightPos = {}
 	M.highlightSize = 100				-- 100 * window.scale
@@ -108,9 +108,9 @@ function Menu:getButton(pos)
 end
 
 function Menu:newText(rectBottomLeft, rectTopRight, pos, size, text)
--- cria um texto dentro da janela
--- rectBottomLeft canto inferior esquerdo da caixa de texto
--- rectTopRight canto superior direito da caixa de texto
+	-- create a text inside the window
+	-- rectBottomLeft is the bottom left corner of the text
+	-- rectTopRight is the top right corner of the text
 	
 	textbox = MOAITextBox.new()
 	
@@ -158,10 +158,10 @@ function Menu:newHighlight(size)
 	changePriority(highlight, "interface")
 	highlight:setDeck(self.highlightDeck)
 	
-	-- ajusta o tamanho
+	-- adjust the size
 	highlight:setScl(size.x, size.y)
 	
-	-- coloca a transparencia
+	-- put an alpha
 	highlight:setColor(1, 1, 1, self.highlightAlpha)
 	
 	window.interface.layer:insertProp(highlight)
@@ -171,7 +171,7 @@ function Menu:newHighlight(size)
 end
 
 function Menu:hightlightChangeOption(highlight, pos)
--- "highlight" corresponde ao numero no array self.highlights
+	-- "highlight" is the index in array self.highlights
 	self.highlightPos[highlight] = Vector:new(pos.x, pos.y)
 
 	self.highlights[highlight]:setLoc(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2)

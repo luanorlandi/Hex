@@ -9,7 +9,7 @@ function Turn:new(player1, player2, mode)
 	
 	T.currentPlayer = nil
 	T.waitingPlayer = nil
-	self.myTurn = nil			-- esse atributo so eh relevante contra bot
+	self.myTurn = nil			-- this attribute is only relevant against bot
 	
 	if player1.myTurn == playerTurn["first"] then
 		self.myTurn = true
@@ -25,26 +25,26 @@ function Turn:new(player1, player2, mode)
 	
 	T.mode = mode
 	
-	T.undoTime = 2.3			-- tempo disponivel para desfazer a jogada
-	T.inUndo = false			-- indica se eh possivel desfazer a jogada
-	T.inRedo = false			-- indica se eh possivel refazer a jogada
-	T.undoLastMove = nil		-- hexagono que era de destaque no ultimo movimento
-	T.redoMove = nil			-- hexagono que sera a jogada de refazer
+	T.undoTime = 2.3			-- time available to undo the move
+	T.inUndo = false			-- indicate if it's possible to undo the move
+	T.inRedo = false			-- indicate if it's possible to redo the move
+	T.undoLastMove = nil		-- highlighted hexagon in the last turn
+	T.redoMove = nil			-- hexagon that will be the redo move
 	
 	return T
 end
 
 function Turn:makeMove(hex)
--- tenta realizar uma jogada
+	-- try to make a move
 	
-	-- se o jogo ainda nao acabou permite a jogada
+	-- if the game is not over, allow the move
 	if not board.gameOver then
 	
-		-- para o jogo local, sempre ira fazer a jogada
+		-- for a local game, always make the move
 		if self.mode == gameMode["local"] then
 			self:performTurn(hex)
 		else
-		-- modo contra bot
+			-- human vs AI mode
 			if self.myTurn then
 				self:performTurn(hex)
 				
@@ -60,10 +60,9 @@ function Turn:makeMove(hex)
 end
 
 function Turn:performTurn(hex)
--- realiza o turno
 	hex:setHex(self.currentPlayer.colorLastMove, self.currentPlayer.myPath)
 	
-	-- troca o ultimo hexagono selecionado
+	-- swap the last hexagon selected
 	if self.currentPlayer.lastMove ~= nil then
 		self.currentPlayer.lastMove:setHex(self.currentPlayer.color, self.currentPlayer.myPath)
 	end
@@ -71,12 +70,12 @@ function Turn:performTurn(hex)
 	self.undoLastMove = self.currentPlayer.lastMove
 	self.currentPlayer.lastMove = hex
 	
-	-- seleciona a grade do jogador
+	-- selected the player's grid
 	local grid = board.hexGrid[self.currentPlayer.myPath]
 	grid:setElement(hex.row, hex.column)
 	
 	if not (grid:findPath()) then
-		-- troca as faixas indicando a vez do outro jogador
+		-- swap the lanes indicating the other player's turn
 		board.lane[self.currentPlayer.myPath]:blendOut()
 		board.lane[self.waitingPlayer.myPath]:blendIn()
 		
@@ -96,10 +95,10 @@ function Turn:change()
 	self.waitingPlayer = tmp
 	
 	if self.mode == gameMode["local"] or self.myTurn then
-	-- so deixa desfazer a jogada caso seja seu turno, ou um jogo local
-	
-		-- caso a jogada foi muito rapida e ainda eh possivel desfazer
-		-- somente reseta o tempo do botao
+		-- only allow undo the move if it's his turn, or local game
+		
+		-- if the move that was very fast and it's still possible to undo
+		-- only reset button time
 		if self.inUndo then
 			self.resetTimerUndo = true
 		else
@@ -126,8 +125,8 @@ function Turn:allowUndo()
 			
 			coroutine.yield()
 			
-			-- se outra jogada for feita enquanto eh possivel desfazer
-			-- eh resetado o tempo do botao
+			-- if another move is done while it's still possible to undo
+			-- reset button time
 			if self.resetTimerUndo then
 				start = gameTime
 				
@@ -135,7 +134,7 @@ function Turn:allowUndo()
 			end
 		end
 		
-		-- se nao clickou no botao, desativa ele
+		-- if didn't click/tap the button, disable it
 		if not (gameTime < start + self.undoTime) or board.gameOver then
 			window.interface.gameInterface.undoButton:setAvailable(false)
 		end
@@ -147,7 +146,7 @@ end
 function Turn:undoRedo()
 	if window.interface.gameInterface.currentUndo == "undo" then
 	
-		-- desfaz a jogada e volta ao estado anterior
+		-- undo the move and return to previous state
 		self.qty = self.qty - 1
 		
 		local tmp = self.currentPlayer
@@ -160,31 +159,31 @@ function Turn:undoRedo()
 		local grid = self.currentPlayer.myPath
 		local lastMove = self.currentPlayer.lastMove
 		
-		-- desfaz na matriz e no grid
+		-- undo matrix and grid
 		board.hexGrid[grid]:resetElement(lastMove.row, lastMove.column)
 		lastMove:resetHex()
 		
 		if self.undoLastMove ~= nil then
-			-- volta o hexagono de destaque da jogada anterior
+			-- turn the highlighted hexagon of the previous move
 			self.undoLastMove:setHex(self.currentPlayer.colorLastMove, self.currentPlayer.myPath)
 		end
 		
-		-- atribui a jogada desfeita como a possivel jogada para refazer
+		-- assign the undone move as a possible redo
 		self.redoMove = self.currentPlayer.lastMove
 		
-		-- atribui de jogada anterior como sendo a penultima
+		-- assign the previous move as the penultimate
 		self.currentPlayer.lastMove = self.undoLastMove
 		
 		self.myTurn = true
 		
-		-- cancela a jogada do bot, se houver
+		-- cancel the move of bot, if any
 		if bot ~= nil then
 			bot.cancelAnalysis = true
 		end
 	else
 		self.inRedo = true
 		
-		-- refaz a jogada
+		-- redo the move
 		self:makeMove(self.redoMove)
 		
 		self.inRedo = false

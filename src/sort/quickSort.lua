@@ -1,6 +1,6 @@
--- algoritmo de ordenacao quicksort em lua
--- com impletacoes para 1 e 2 arrays
--- ordena em ordem DECRESCENTE
+-- sorting algorithm in Lua
+-- implemented for 1 and 2 arrays
+-- sorted in descending order
 
 function quickSort(A, start, ending)
 	if start < ending then
@@ -29,9 +29,10 @@ function partition(A, start, ending, pivot)
 end
 
 function quickSortTwoArrays(A, B, start, ending)
--- ordena dois vetores ao mesmo tempo, priorizando
--- o primeiro para a comparacao. Assume que tem o
--- mesmo tamanho
+-- sort 2 arrays at the same time, prio
+-- ordena dois vetores ao mesmo tempo, prioritizing
+-- the first one to compare
+-- assume that they both have the same size
 
 	if start < ending then
 		local pivot = math.floor((start + ending) / 2)

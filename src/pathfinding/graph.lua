@@ -4,29 +4,27 @@ Graph = {}
 Graph.__index = Graph
 
 function Graph:new(pathDirection)
--- cria um grafo do board
+	-- create a graph of board
 	local G = {}
 	setmetatable(G, Graph)
 	
-	G.V = Vector:new(board.size.y + 2, board.size.x + 2)			-- numero de vertices
-	-- soma 2 para incluir as bordas
+	G.V = Vector:new(board.size.y + 2, board.size.x + 2)			-- vertex amount
+	-- sum 2 to include edges
 	
-	G.pathDirection = pathDirection -- caminho vertical ou horizontal
-	G.bothSides = 3					-- macro para indicar que o hexagono pertence aos 2 jogadores
-	G.infinity = 9999				-- macro para indicar uma distancia infinita
+	G.pathDirection = pathDirection -- vertical or horizontal
+	G.bothSides = 3					-- macro to indicate that the hexagon is owned bt both path players
+	G.infinity = 9999				-- macro to indicate that the distance is infinite
 	
 	G.move = false
 	
-	-- cria os vertices do grafo
-	-- e auxiliares para inidicar vertices ja visitados
+	-- create the graph vertices
+	-- and aid to indicate visited vertices
 	G.vertex = {}
 	for i = 1, G.V.y, 1 do
 		G.vertex[i] = {}
 	end
 	
 	G:update()
-	
-	-- auxiliar para indicar se
 	
 	-- debug
 	G.texts = {}
@@ -35,20 +33,21 @@ function Graph:new(pathDirection)
 end
 
 function Graph:getValueFromBoard(y, x)
-	-- cantos, pertence aos dois jogadores
+	-- corner, owned by both players
 	if (y == 1 and x == 1) or
 	   (y == 1 and x == self.V.x) or
 	   (y == self.V.y and x == 1) or
 	   (y == self.V.y and x == self.V.x) then
-			return self.bothSides
+		
+		return self.bothSides
 	end
 	
-	-- borda de cima e de baixo
+	-- top and bottom edge
 	if y == 1 or y == self.V.y then
 		return victoryPath["vertical"]
 	end
 	
-	-- borda da esquerda e da direita
+	-- left and right edge
 	if x == 1 or x == self.V.x then
 		return victoryPath["horizontal"]
 	end
@@ -57,7 +56,7 @@ function Graph:getValueFromBoard(y, x)
 end
 
 function Graph:update()
--- atualiza os valores de a quem pertencem cada hexagonos
+	-- update the values of who own the hexagon
 	for i = 1, self.V.y, 1 do
 		for j = 1, self.V.x, 1 do
 			self.vertex[i][j] = self:getValueFromBoard(i, j)
@@ -76,12 +75,12 @@ end
 function Graph:dijkstra(source)
 	local s = Vector:new(source.x + 1, source.y + 1)
 	
-	local distance = {}			-- distancia da origem
-	local previous = {}			-- hexagono antecessor
+	local distance = {}			-- source distance
+	local previous = {}			-- previous hexagon
 
-	local queue = Heap:new()	-- fila de prioridade(min heap)
-	local visited = {}			-- auxiliar para indicar se um vertice ja foi avaliado
-	local inQueue = {}			-- auxiliar para indicar se um vertice esta na fila
+	local queue = Heap:new()	-- priority queue (min heap)
+	local visited = {}			-- aid to indicate if a vertex was already evaluated
+	local inQueue = {}			-- aid to indicate if a vertex is already in the queue
 	
 	for i = 1, self.V.y, 1 do
 		distance[i] = {}
@@ -160,7 +159,7 @@ function Graph:getLesser(queue, distance)
 end
 
 function Graph:getNeighbors(hexPos)
--- retorna uma tabela com as posicoes x e y dos vizinhos
+	--return a table with the positions x and y of neighbors
 	
 	neighbors = {}
 	
@@ -198,70 +197,70 @@ function Graph:getNeighbors(hexPos)
 end
 
 function Graph:getWeight(source, destiny)
--- retorna a distancia (comprimento da aresta) entre source e destiny
+	-- return the distance (edge length) beetwen source and destiny
 	
-	-- "value" eh o numero (macro de victoryPath) indicando a qual jogador pertence o hexagono
+	-- "value" is the number (macro of victoryPath) indicate to which player owns the hexagon
 	local sourceValue = self.vertex[source.y][source.x]
 	local destinyValue = self.vertex[destiny.y][destiny.x]
 
 	if sourceValue == 0 then
-		-- source livre
+		-- source free
 		
 		if destinyValue == self.pathDirection or destinyValue == self.bothSides then
-			-- destino meu ou canto
+			-- my destiny or corner
 			
 			return 0
 		elseif destinyValue ~= 0 then
-			-- destino oponente
+			-- opponent's destiny
 			
 			return self.infinity
 		else
-			-- destino livre
+			-- destiny free
 			
 			if self.move and self:checkOpponentMove(source, destiny) then
-				-- caso eh uma jogada simulada, checa se o oponente
-				-- consegue fechar o caminho na sua proxima jogada
+				-- in case is a simulated move, check if the opponent
+				-- can complete his path in his next move
 				
 				return self.infinity
 			elseif self:checkOpponentPathLink(source, destiny) then
-				-- checa se eh um hexagono em caminho de ligacao do oponente
+				-- check if it's a hexagon in a opponent's path connection
 				
 				return self.infinity
 			else
-				-- caso ideal
+				-- ideal case
 				return 1
 			end
 		end
 	elseif sourceValue ~= self.pathDirection then
-		-- source oponente
+		-- opponent's source
 		
 		return self.infinity
 	else
-		-- source meu
+		-- my source
 		
 		if destinyValue == self.pathDirection or destinyValue == self.bothSides then
-			-- destino meu ou canto
+			-- my destiny or corner
 			
 			return 0
 		elseif destinyValue ~= 0 then
-			-- destino oponente
+			-- opponent's destiny
 			
 			return self.infinity
 		else
-			-- destino livre
+			-- destiny free
 			
 			if self.move and self:checkOpponentMove(source, destiny) then
-				-- caso eh uma jogada simulada, checa se o oponente
-				-- consegue fechar o caminho na sua proxima jogada
+				-- in case is a simulated move, check if the opponent
+				-- can complete his path in his next move
 				
 				return self.infinity
 			elseif self:checkOwnPathLink(source, destiny) then
 				-- checa se eh um hexagono em caminho de ligacao
+				-- check if it's a hexagon in path connection
 				
 				return 0
 			else
-				-- caso ideal
-				
+				-- ideal case
 				return 1
 			end
 		end
@@ -269,14 +268,14 @@ function Graph:getWeight(source, destiny)
 end
 
 function Graph:checkOwnPathLink(source, link)
--- verifica se o hexagono em link eh de ligacao do proprio jogador, valendo peso 0
+	-- check if the hexagon in link is of connection from the player, giving 0 weight
 
--- a funcao assume inicialmente que o source eh do jogador e
--- o link existe e nao pertence a ninguem
+	-- the function assume initially that the source is from the player,
+	-- the link exists and not owned
 
 	if source.y == 1 or source.x == 1 or
 		source.y == self.V.y or source.x == self.V.x then
-		-- desconsidera se o source eh na borda
+		-- discard if the source is in the edge
 		
 		return false
 	end
@@ -376,10 +375,10 @@ function Graph:checkOwnPathLink(source, link)
 end
 
 function Graph:checkOwnLink(adjacent, farAdjacent, edge)
--- usado para checar as ligacoes da funcao de cima
--- "adjacent" e "farAdjacent" parametros de entrada sao hexagonos do board
--- "edge" eh a direcao para qual borda ("upper" e "bottom" sao para vertical,
--- "upper left, upper right, bottom left e bottom right" sao para horizontal)
+	-- used to check the connections from the method above
+	-- "adjacent" and "farAdjacent" arguments are hexagons of the board
+	-- "edge" is a direction to which edge("upper" and "bottom" are vertical,
+	-- "upper left", "upper right", "bottom left" and "bottom right" are horizontal)
 
 	if adjacent ~= nil and adjacent.hold == 0 then
 		if farAdjacent == nil then
@@ -395,18 +394,18 @@ function Graph:checkOwnLink(adjacent, farAdjacent, edge)
 end
 
 function Graph:checkOpponentPathLink(source, link)
--- verifica se o hexagono em link eh de ligacao do oponente, valendo peso infinito
+	-- check if the hexagon in link is the opponent connection, giving infinite weight
 
--- a funcao assume inicialmente que o source e link esta livre
+	-- the method assume initially that the source and link are free
 
 	if source.y == 1 or source.x == 1 or
 		source.y == self.V.y or source.x == self.V.x then
-		-- desconsidera se o source eh na borda
+		-- discard if the source is in the edge
 		
 		return false
 	end
 	
-	-- hexagonos adjacentes em sentido horario na direita
+	-- adjacent hexagons in clockwise on right
 	local leftAdjacent = nil
 	local rightAdjacent = nil
 	
@@ -449,7 +448,7 @@ function Graph:checkOpponentPathLink(source, link)
 		rightAdjacent = board:getUpperLeftHexagon(hexSource)
 	end
 	
-	-- se os dois hexagonos adjacentes for do oponente ou estao na borda
+	-- if both adjacent hexagons are owned by the opponent or are in the edge
 	if ((leftAdjacent == nil) or (leftAdjacent.hold ~= 0 and leftAdjacent ~= self.pathDirection)) and
 	   ((rightAdjacent == nil) or (rightAdjacent.hold ~= 0 and rightAdjacent ~= self.pathDirection)) then
 	   
@@ -460,16 +459,16 @@ function Graph:checkOpponentPathLink(source, link)
 end
 
 function Graph:checkOpponentMove(source, destiny)
--- se eh uma jogada simulada sendo avaliada, verifica para
--- para a situacao em que se o opoennte jogar no hexagono 
--- de destino no proximo turno o caminho sera fechado
+	-- if it's a simulated move being evaluated, check for
+	-- a situation which if the opponent plays in the destiny
+	-- hexagon in the next turn, the path will be completed
 
--- a funcao assume inicialmente que o atributo move eh true
--- e o hexagono em destiny eh livre
-	
+	-- the method assume initially that the attribute move is true
+	-- and the ehxagon in destiny is free
+
 	if source.y == 1 or source.x == 1 or
 		source.y == self.V.y or source.x == self.V.x then
-		-- desconsidera se o source eh na borda
+		-- discard if the source is in the edge
 		
 		return false
 	end
@@ -555,7 +554,7 @@ function Graph:checkOpponentMove(source, destiny)
 end
 
 function Graph:showDistance(dist)
--- funcao para debug
+	-- debug
 	local font = MOAIFont.new ()
 	font:loadFromTTF("font/zekton free.ttf", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'", 25)
 	

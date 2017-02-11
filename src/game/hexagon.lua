@@ -5,7 +5,7 @@ function Hexagon:new(pos, row, column)
 	local H = {}
 	setmetatable(H, Hexagon)
 	
-	-- esses 2 atributos auxiliam no input
+	-- these 2 attributes aid the input
 	H.name = "hexagon"
 	H.selected = false
 	
@@ -15,9 +15,9 @@ function Hexagon:new(pos, row, column)
 	
 	H.defaultColor = Color:new(1, 1, 1)
 	H.color = Color:new(1, 1, 1)
-	H.hold = 0						-- inidica a qual jogador pertence (1 ou 2, ou 0 se de ninguem)
+	H.hold = 0					-- indicate which player player own the hexagon (1 or 2, or 0 if is free)
 	
-	H.visited = false				-- auxliar da IA
+	H.visited = false			-- aid the AI
 	
 	H.pos = Vector:new(pos.x, pos.y)
 	H.row = row
@@ -36,20 +36,20 @@ function Hexagon:clear()
 end
 
 function Hexagon:setHex(color, playerPath)
--- define a quem pertence o hexagono
+	-- define who own the hexagon
 	self:changeColor(color)
 	self.hold = playerPath
 	self.available = false
 end
 
 function Hexagon:setTemporaryHex(playerPath)
--- defini temporariamente, sem cor, a quem pertence o hexagono
+	-- define who own the hexagon, without color
 	self.hold = playerPath
 	self.available = false
 end
 
 function Hexagon:resetHex()
--- reseta o hexagono, definindo que pertence a ninguem
+	-- reset the hexagon, define that it doesn't belong to anyone
 	self:changeColor(self.defaultColor)
 	self.hold = 0
 	self.available = true
@@ -61,7 +61,7 @@ function Hexagon:changeColor(color)
 end
 
 function Hexagon:move(pos)
-	-- move o hexagono para a posicao "pos"
+	-- move the hexagon to position "pos"
 	
 	self.pos = Vector:new(pos.x, pos.y)
 	self.sprite:setLoc(pos.x, pos.y)

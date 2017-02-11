@@ -6,14 +6,14 @@ Board = {}
 Board.__index = Board
 
 function Board:new(size)
-	-- "size" tamanho do tabuleiro (padrao 11 x 11)
+	-- "size" board size (default 11 x 11)
 	
 	local B = {}
 	setmetatable(B, Board)
 	
 	B.size = size
 	
-	-- tamanho dos hexagonos, depende do tamanho do tabuleiro e da resolucao
+	-- hexagons size, depends on the size of the board and resolution
 	B.hexagonSize = nil
 	B:calculateHexagonSize()
 	
@@ -25,7 +25,7 @@ function Board:new(size)
 	]]
 	local pos = Vector:new(B.start.x, B.start.y)
 	
-	-- cria um tabuleiro como se fosse uma matriz, tambem utiliza esse loop para mover os hexagonos
+	-- create a new board as if was a matrix, also use this loop to move the hexagons
 	B.hexagon = {}
 	for i = 1, size.y, 1 do
 		B.hexagon[i] = {}
@@ -43,23 +43,23 @@ function Board:new(size)
 	
 	B.background = Background:new(window.deckManager.boardBackground)
 	
-	-- cria um grid para cada jogador
+	-- create a grid for each player
 	B.hexGrid = {}
 	B.hexGrid[1] = HexGrid:new(B.size, victoryPath["horizontal"])
 	
 	B.hexGrid[2] = HexGrid:new(B.size, victoryPath["vertical"])
 	
-	-- faixa indicando a direcao do caminho
+	-- lane to indicate the path direction
 	B.lane = {}
 	B.lane[1] = Lane:new(victoryPath["horizontal"])
 	B.lane[2] = Lane:new(victoryPath["vertical"])
 	
-	-- indica se o jogo se o jogo continua a cada frame
-	-- se colocado false, sera terminada a corotina do jogo
+	-- while true the coroutine continues
+	-- when set false the game ends
 	B.active = true
 	
-	-- indica se o jogo acabou, porem ainda eh possivel clickar
-	-- na tela e fazer as acoes dos botoes
+	-- indicate if the game is over, but it's this possible to click/tap
+	-- on the screen and do button actions
 	B.gameOver = false
 	
 	return B
@@ -104,15 +104,15 @@ function Board:moveHexagons()
 end
 
 function Board:getHexagon(pos)
--- procura se ha um hexagono no tabuleiro na posicao "pos"
--- retorna ele ou nil caso nao encontrar
+	-- search for a hexagon in position "hex"
+	-- return it or nill if wasn't found
 	local hex = nil
 	
 	local hexPos = Vector:new(0, 0)
 	local cameraPos = window.camera:getPosition()
 	
-	-- verifica se esta com o tabuleiro ampliado, calculando a posicao de maneira diferente
-	-- dobra(no caso de um zoom x2, que seria: window.camera.zoom = 0.5) o tamanho dos hexagonos
+	-- check if it's board amplified, calculating the position in a different way
+	-- double (in case of x2 zoom,, which would be: window.camera.zoom = 0.5) hexagons size
 	if window.camera.zoomStatus == "out" then
 		hexPos.y = pos.y - window.resolution.y/2 + self.start.y + self.hexagonSize.y/2
 		hexPos.y = hexPos.y / (0.75 * self.hexagonSize.y)
@@ -139,17 +139,17 @@ function Board:getHexagon(pos)
 		-- y - y0 = m(x - x0)
 		local y0 = 1/3
 		local x0
-		local side			-- auxilia no calculo do angulo
+		local side			-- aid the angle calculus
 		
 		hexPos.x = hexPos.x % 1
 		
 		if hexPos.x > 0.5 then
-			-- lado direito
+			-- right side
 			hexPos.x = hexPos.x % 0.5
 			side = -1
 			x0 = 0
 		else
-			-- lado esquerdo
+			-- left side
 			side = 1
 			x0 = 0.5
 		end
@@ -177,8 +177,8 @@ function Board:getHexagon(pos)
 	return hex
 end
 
--- metodos que pegam o hexagono adjacente no tabuleiro
--- auxilia na analise da inteligencia artificial
+-- methods that get the adjacent hexagon in the board
+-- aid the analyse of the AI
 function Board:getUpperLeftHexagon(hex)
 	local adjacentHex
 	
@@ -251,8 +251,8 @@ function Board:getLeftHexagon(hex)
 	return adjacentHex
 end
 
--- metodos que pegam o hexagono adjacente distante
--- auxilia na analise da inteligencia artificial
+-- methods that get the FAR adjacent hexagon in the board
+-- aid the analyse of the AI
 function Board:getFarUpperLeftHexagon(hex)
 	local adjacentHex
 	

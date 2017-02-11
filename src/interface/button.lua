@@ -2,8 +2,8 @@ Button = {}
 Button.__index = Button
 
 function Button:new(pos, area, type, deck, color, text, textSize)
--- "type" corresponde a uma string do que o botao deve fazer
--- se for um texto, "text" contem a string dele
+	-- "type" is a string of the button type
+	-- if is a text, "text" has the string
 
 	local B = {}
 	setmetatable(B, Button)
@@ -13,25 +13,25 @@ function Button:new(pos, area, type, deck, color, text, textSize)
 	
 	B.type = type
 	
-	-- indica se eh possivel apertar nesse botao
+	-- indicate if is possible to press the button
 	B.available = true
 	
-	-- define a cor do botao
+	-- define the button color
 	if color ~= nil then
 		B.color = color
 	else
 		B.color = Color:new(1, 1, 1)
 	end
 	
-	B.prop = nil					-- contem um sprite ou um text
+	B.prop = nil					-- has a sprite or text
 	if text == nil then
 		B:createSprite(deck)
 	else
-		B:createText(deck, text, textSize)	-- deck contem a fonte a ser usada
+		B:createText(deck, text, textSize)	-- deck has the font to be used
 	end
 	changePriority(B.prop, "interface")
 	
-	-- posicao central e area de hitbox do click/tap
+	-- central position and area of click/tap hitbox
 	B.pos = pos
 	B.area = area
 	
@@ -136,7 +136,7 @@ function Button:doAction()
 		window.interface.gameInterface.menu:clear()
 		window.interface.gameInterface.menu = nil
 	
-	-- acoes do menu de criar um novo jogo:-------------------------------------------
+	-- menu actions of create new game -----------------------------------------------
 	elseif self.type == "7x7" then
 	
 		newGame.boardSize = Vector:new(7, 7)
@@ -167,7 +167,7 @@ function Button:doAction()
 		window.interface.gameInterface.menu:hightlightChangeOption(2, pos)
 	
 	elseif self.type == "humanVSai" then
-	-- jogador humano eh o azul, horizontal
+		-- human player is blue, horizontal
 		newGame.mode = gameMode["bot"]
 		newGame.myPath = victoryPath["horizontal"]
 		
@@ -181,7 +181,7 @@ function Button:doAction()
 		window.interface.gameInterface.menu:hightlightChangeOption(2, pos)
 	
 	elseif self.type == "aiVShuman" then
-	-- jogador humano eh o vermelho, vertical
+		-- human player is red, vertical
 		newGame.mode = gameMode["bot"]
 		newGame.myPath = victoryPath["vertical"]
 		
