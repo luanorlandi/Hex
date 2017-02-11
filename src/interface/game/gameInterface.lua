@@ -394,19 +394,13 @@ function GameInterface:openGameOverMenu(winner)
 	local rectTopRight = Vector:new(0.16, 0.12)
 	pos = Vector:new(0, 0)
 	size = window.deckManager.bigFont
-	
-	local file = io.open("file/gameOver.txt", "r")
-	local text = file:read("*l")
+
+	local text = strings.blueWins
 	
 	if winner.myPath == victoryPath["vertical"] then
-		-- se foi o vermelho/vertical que venceu, le a proxima linha
-		-- if was red/vertical that won, read next line
-		
-		text = file:read("*l")
+		text = strings.redWins
 	end
-	
-	io.close(file)
-	
+
 	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, text)
 	self.menu.texts[table.getn(self.menu.texts)]:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
 end
