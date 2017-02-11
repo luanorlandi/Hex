@@ -1,37 +1,31 @@
 # Hex
 
-##Introdução
+![](https://github.com/luanorlandi/Hex/blob/master/wiki/hex.png)
 
-Hex é um jogo de tabuleiro criado durante uma pesquisa de iniciação científica do autor.
+This is a game developed for mobile, browser and desktop.
 
-O jogo foi desenvolvido na linguagem [Lua][Lua-sobre] e motor gráfico [MOAI][MOAI-download], está atualmente disponível nas plataformas Android, Windows, Linux e OSX.
+Check the [releases](https://github.com/luanorlandi/Hex/releases) tab and the [html host](https://luanorlandi.github.io/Hex/) here to play it.
 
-##Download
+## More than just a game
 
-O jogo pode ser baixado pelas seguintes maneiras
+Hex is also part of a scientific research project.
 
-* [Source][Source-download]: Baixe o código fonte juntamente com as texturas. Requer o [MOAI][MOAI-download]  instalado para executar o jogo
+The game was the developed (and being updated from time to time) applying math and basic programming concepts in computer science.
 
-* Alternativamente, baixe em umas das versões disponíveis [aqui][Release-download]. Na versão Android ative a opção de desenvolvedor Android (o aplicaticativo ainda não tem lançamento oficial com appid)
+The project Math and programming in Hex had the objective of study and apply analytical geometry (and math, in general), Game Theory and artificial intelligence concepts on game development.
 
-##Projeto de Iniciação Científica
+It's a different way to learn those field of study. You can check this [wiki page](https://github.com/luanorlandi/Hex/wiki) to see for yourself and learn math and programming in a more interesting manner.
 
-Em uma pesquisa de iniciação científica do aluno Luan Gustavo Orlandi do ICMC-USP, com orientação do professor Leandro Fiorini Aurichi e apoio do CNPq, foi desenvolvido o projeto Matemática e programação em Hex.
+There is also a portuguese pdf made at the end of the scientific research project, check it out [here](https://github.com/luanorlandi/Hex/blob/master/wiki/Matem%C3%A1tica%20e%20programa%C3%A7%C3%A3o%20em%20Hex.pdf).
 
-O objetivo foi criar um jogo eletrônico que se baseia no jogo de tabuleiro Hex e a confecção de uma apostila que apresente os conceitos de matemática e programação trabalhados no projeto. Assim outras pessoas podem conhecer o jogo Hex e suas teorias, bem como poder aprender matemática de uma maneira diferente.
+![](https://github.com/luanorlandi/Hex/blob/master/wiki/screenshot.png)
 
-O jogo pode ser baixado nesta página do GitHub e a apostila através do link: [Matemática e programação em Hex][Apostila-download]
+## Credits
 
-A iniciação científica não só ampliou a formação do autor mas também deixou no final uma apostila para estudo do projeto realizado, assim alunos interessados, como por exemplo iniciantes no curso de computação, podem aprender programação e matemática de uma forma diferente e mais prática.
+- Development guided by Leandro Fiorini Aurichi
+- Project supported by [CNPq](http://cnpq.br/)
+- Developed with [MOAI](http://getmoai.com/)
+- Builded with [MoaiCLI](http://halfnelson.github.io/moaicli/)
 
-Outra conclusão relevante é também o jogo em si, que se baseia em um jogo de tabuleiro já existente, mas pouco conhecido, podendo ser um atrativo no entretenimento casual.
-
-[Lua-sobre]: http://www.lua.org/portugues.html
-[MOAI-download]: https://github.com/moai/moai-dev
-[Source-download]: https://github.com/luanorlandi/Hex/archive/master.zip
-[Android-download]: https://drive.google.com/file/d/0B4sAl8ui96CLNWRqM1pUYmVyOHc/view?usp=sharing
-[Windows-download]: https://drive.google.com/file/d/0B4sAl8ui96CLRTdoYU83R1BFVGM/view?usp=sharing
-[Linux-download]: https://drive.google.com/file/d/0B4sAl8ui96CLQ25scHF3WUxBWGs/view?usp=sharing
-[OSX-download]: https://drive.google.com/file/d/0B4sAl8ui96CLRjJaQ1ZBRG1vMzg/view?usp=sharing
-[Apostila-download]: https://drive.google.com/file/d/0B4sAl8ui96CLdU50NWFxZVFmR0k/view?usp=sharing
-[Release-download]: https://github.com/luanorlandi/Hex/releases
+## License
+[GPLv3](https://github.com/luanorlandi/Swift-Space-Battle/blob/master/LICENSE)
