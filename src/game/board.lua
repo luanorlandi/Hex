@@ -58,7 +58,7 @@ function Board:new(size)
 	-- when set false the game ends
 	B.active = true
 	
-	-- indicate if the game is over, but it's this possible to click/tap
+	-- indicate if the game is over, but it's still possible to click/tap
 	-- on the screen and do button actions
 	B.gameOver = false
 	
