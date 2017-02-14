@@ -40,6 +40,9 @@ function DeckManager:new()
 	
 	D.buttonHighlight = MOAIGfxQuad2D.new()
 	D.buttonHighlight:setTexture("texture/effect/buttonHighlight.png")
+
+	D.hexLogo = MOAIGfxQuad2D.new()
+	D.hexLogo:setTexture("texture/logo/hex.png")
 	
 	-- buttons
 	D.newGameButton = MOAIGfxQuad2D.new()
@@ -94,10 +97,6 @@ function DeckManager:new()
 	D.smallFont = 20
 	D.mediumFont = 28
 	D.bigFont = 40
-	
-	--[[15 * window.scale
-	20 * window.scale
-	25 * window.scale]]
 	
 	-- fonts
 	D.fontArial = MOAIFont.new ()
@@ -187,10 +186,15 @@ function DeckManager:resizeGameDecks()
 							  size.x * window.scale,  size.y * window.scale)
 			end
 			
-			self.buttonHighlight:setRect(-window.interface.gameInterface.menu.highlightSize * window.scale,
-										-window.interface.gameInterface.menu.highlightSize * window.scale,
-										window.interface.gameInterface.menu.highlightSize * window.scale,
-										window.interface.gameInterface.menu.highlightSize * window.scale)
+			self.buttonHighlight:setRect(-window.interface.gameInterface.menu.highlightSize.x * window.scale,
+										-window.interface.gameInterface.menu.highlightSize.y * window.scale,
+										window.interface.gameInterface.menu.highlightSize.x * window.scale,
+										window.interface.gameInterface.menu.highlightSize.y * window.scale)
+			
+			self.hexLogo:setRect(-window.interface.gameInterface.menu.hexLogoSize.x * window.scale,
+								-window.interface.gameInterface.menu.hexLogoSize.y * window.scale,
+								window.interface.gameInterface.menu.hexLogoSize.x * window.scale,
+								window.interface.gameInterface.menu.hexLogoSize.y * window.scale)
 		end
 	end
 end

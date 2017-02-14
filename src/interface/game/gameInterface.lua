@@ -168,20 +168,39 @@ function GameInterface:openWelcome()
 	self.menu = Menu:new(menuType["welcome"])
 	
 	-- button to close the window
-	local pos = Vector:new(0.78, 0.74)			-- proporcao em relacao a janela
+	local pos = Vector:new(0.78, 0.74)
 	local size = Vector:new(self.buttonSize.x, self.buttonSize.y)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	
 	self.menu:newButton(pos, area, "close", window.deckManager.close, size)
 	
+	-- hex logo
+	pos = Vector:new(0, 0.55)
+	size = Vector:new(self.menu.hexLogoSize.x, self.menu.hexLogoSize.y)
+	area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
+							   Vector:new(size.x * window.scale, size.y * window.scale))
+	self.menu:newButton(pos, area, "hexLogo", window.deckManager.hexLogo, size)
+	
 	-- text
-	local rectBottomLeft = Vector:new(-0.39, -0.38)
-	local rectTopRight = Vector:new(0.39, 0.38)
-	pos = Vector:new(0, 0)
+	local rect = Rectangle:new(
+		Vector:new(0, -0.23),
+		Vector:new(0.39, 0.38)
+	)
+
 	size = window.deckManager.mediumFont
 	
-	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, strings.welcome)
+	self.menu:newText(rect, size, strings.welcome)
+	
+	-- version
+	local rect = Rectangle:new(
+		Vector:new(0, 0),
+		Vector:new(0.39, 0.38)
+	)
+
+	size = window.deckManager.smallFont
+	
+	self.menu:newText(rect, size, version)
 end
 
 function GameInterface:openAbout()
@@ -224,12 +243,14 @@ function GameInterface:openNewGameMenu()
 	-----------------------------------------------------------------------------------------------------------------
 	
 	-- text describing the options
-	local rectBottomLeft = Vector:new(-0.39, -0.38)
-	local rectTopRight = Vector:new(0.39, 0.38)
-	pos = Vector:new(0, 0)
+	local rect = Rectangle:new(
+		Vector:new(0, 0),
+		Vector:new(0.39, 0.38)
+	)
+
 	size = window.deckManager.mediumFont
 	
-	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, strings.menu)
+	self.menu:newText(rect, size, strings.menu)
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
@@ -241,12 +262,14 @@ function GameInterface:openNewGameMenu()
 	-----------------------------------------------------------------------------------------------------------------
 	
 	-- text to start new game
-	local rectBottomLeft = Vector:new(-0.39, -0.38)
-	local rectTopRight = Vector:new(0.39, 0.38)
-	pos = Vector:new(0, 0)
+	local rect = Rectangle:new(
+		Vector:new(0, 0),
+		Vector:new(0.39, 0.38)
+	)
+	
 	size = window.deckManager.mediumFont
 	
-	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, strings.startGame)
+	self.menu:newText(rect, size, strings.startGame)
 	self.menu.texts[table.getn(self.menu.texts)]:setAlignment(MOAITextBox.RIGHT_JUSTIFY, MOAITextBox.RIGHT_JUSTIFY)
 	
 	-----------------------------------------------------------------------------------------------------------------
@@ -390,9 +413,11 @@ function GameInterface:openGameOverMenu(winner)
 	self.menu:newButton(pos, area, "close", window.deckManager.close, size)
 	
 	-- text
-	local rectBottomLeft = Vector:new(-0.16, -0.12)
-	local rectTopRight = Vector:new(0.16, 0.12)
-	pos = Vector:new(0, 0)
+	local rect = Rectangle:new(
+		Vector:new(0, 0),
+		Vector:new(0.16, 0.12)
+	)
+
 	size = window.deckManager.bigFont
 
 	local text = strings.blueWins
@@ -401,6 +426,6 @@ function GameInterface:openGameOverMenu(winner)
 		text = strings.redWins
 	end
 
-	self.menu:newText(rectBottomLeft, rectTopRight, pos, size, text)
+	self.menu:newText(rect, size, text)
 	self.menu.texts[table.getn(self.menu.texts)]:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
 end

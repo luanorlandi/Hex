@@ -21,12 +21,10 @@ function Rectangle:equal(b)
 	self.size:equal(b.size)
 end
 
-function Rectangle:copy(orientation, pos)
+function Rectangle:copy()
 	local rectangle = Rectangle:new(Vector:new(0, 0), Vector:new(0, 0))
 
 	rectangle:equal(self)
-	rectangle.center.y = rectangle.center.y * orientation.y
-	rectangle.center:sum(pos)
 	
 	return rectangle
 end

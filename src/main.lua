@@ -7,7 +7,7 @@ For more information, access https://github.com/luanorlandi/Hex
 --------------------------------------------------------------------------------
 ]]
 
-version = "1.1.0"
+version = "v1.1.0"
 firstGame = false
 
 MOAILogMgr.setLogLevel(MOAILogMgr.LOG_NONE)

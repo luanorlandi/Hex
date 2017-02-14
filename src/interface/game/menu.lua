@@ -30,9 +30,7 @@ function Menu:new(type)
 	
 	-- tables that has all texts and buttons on window
 	M.texts = {}
-	M.textRectBottomLeft = {}
-	M.textRectTopRight = {}
-	M.textPos = {}
+	M.textRect = {}
 	M.textSize = {}
 	
 	M.buttons = {}
@@ -43,10 +41,12 @@ function Menu:new(type)
 	-- buttons highlight
 	M.highlights = {}
 	M.highlightPos = {}
-	M.highlightSize = 100				-- 100 * window.scale
+	M.highlightSize = Vector:new(100, 100)			-- 100 * window.scale
 	M.highlightDeck = window.deckManager.buttonHighlight
 	M.highlightAlpha = 0.4
 	
+	M.hexLogoSize = Vector:new(156, 75)
+
 	return M
 end
 
@@ -71,12 +71,12 @@ end
 
 function Menu:reposition()
 	for i = 1, table.getn(self.texts) do
-		self.texts[i]:setRect(self.textRectBottomLeft[i].x * window.resolution.x,
-							  self.textRectBottomLeft[i].y * window.resolution.y,
-							  self.textRectTopRight[i].x * window.resolution.x,
-							  self.textRectTopRight[i].y * window.resolution.y)
-							  
-		self.texts[i]:setLoc(self.textPos[i])
+		self.texts[i]:setRect(
+			(self.textRect[i].center.x - self.textRect[i].size.x) * window.resolution.x,
+			(self.textRect[i].center.y - self.textRect[i].size.y) * window.resolution.y,
+			(self.textRect[i].center.x + self.textRect[i].size.x) * window.resolution.x,
+			(self.textRect[i].center.y + self.textRect[i].size.y) * window.resolution.y)
+		
 		self.texts[i]:setTextSize(self.textSize[i] * window.scale)
 	end
 	
@@ -107,17 +107,20 @@ function Menu:getButton(pos)
 	end
 end
 
-function Menu:newText(rectBottomLeft, rectTopRight, pos, size, text)
+function Menu:newText(rect, textSize, text)
 	-- create a text inside the window
 	-- rectBottomLeft is the bottom left corner of the text
 	-- rectTopRight is the top right corner of the text
 	
 	textbox = MOAITextBox.new()
-	
-	textbox:setRect(rectBottomLeft.x * window.resolution.x, rectBottomLeft.y * window.resolution.y,
-					rectTopRight.x * window.resolution.x,	rectTopRight.y * window.resolution.y)
-	textbox:setLoc(pos)
-	textbox:setTextSize(size * window.scale)
+
+	textbox:setRect(
+		(rect.center.x - rect.size.x) * window.resolution.x,
+		(rect.center.y - rect.size.y) * window.resolution.y,
+		(rect.center.x + rect.size.x) * window.resolution.x,
+		(rect.center.y + rect.size.y) * window.resolution.y)
+
+	textbox:setTextSize(textSize * window.scale)
 	
 	textbox:setFont(window.deckManager.fontZekton)
 	textbox:setYFlip(true)
@@ -131,10 +134,8 @@ function Menu:newText(rectBottomLeft, rectTopRight, pos, size, text)
 	
 	table.insert(self.texts, textbox)
 	
-	table.insert(self.textRectBottomLeft, Vector:new(rectBottomLeft.x, rectBottomLeft.y))
-	table.insert(self.textRectTopRight, Vector:new(rectTopRight.x, rectTopRight.y))
-	table.insert(self.textPos, Vector:new(pos.x, pos.y))
-	table.insert(self.textSize, size)
+	table.insert(self.textRect, rect:copy())
+	table.insert(self.textSize, textSize)
 end
 
 function Menu:newButton(pos, area, type, deck, size, color)
@@ -151,8 +152,8 @@ function Menu:newButton(pos, area, type, deck, size, color)
 end
 
 function Menu:newHighlight(size)
-	self.highlightDeck:setRect(-self.highlightSize * window.scale, -self.highlightSize * window.scale,
-								self.highlightSize * window.scale,  self.highlightSize * window.scale)
+	self.highlightDeck:setRect(-self.highlightSize.x * window.scale, -self.highlightSize.y * window.scale,
+								self.highlightSize.x * window.scale,  self.highlightSize.y * window.scale)
 	
 	local highlight = MOAIProp2D.new()
 	changePriority(highlight, "interface")
