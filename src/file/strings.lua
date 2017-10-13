@@ -4,6 +4,7 @@ require "file/en"
 require "file/es"
 require "file/fr"
 require "file/hu"
+require "file/it"
 require "file/pt"
 
 function readLanguageFile()
