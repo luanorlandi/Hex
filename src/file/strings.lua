@@ -9,7 +9,10 @@ require "file/it"
 require "file/pt"
 require "file/ru"
 require "file/uk"
+require "file/nl"
 require "file/tr"
+
+
 
 function readLanguageFile()
 	local path = locateSaveLocation()
