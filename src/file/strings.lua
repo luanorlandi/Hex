@@ -11,7 +11,7 @@ require "file/ru"
 require "file/uk"
 require "file/nl"
 require "file/tr"
-
+require "file/sv"
 
 
 function readLanguageFile()
