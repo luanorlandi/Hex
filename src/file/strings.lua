@@ -14,6 +14,7 @@ require "file/uk"
 require "file/nl"
 require "file/tr"
 require "file/sv"
+require "file/id"
 
 
 function readLanguageFile()
