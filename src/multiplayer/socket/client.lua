@@ -31,7 +31,7 @@ function Client:connect(adress, port)
 			print("falha na conexao!")
 			
 			font = MOAIFont.new ()
-			font:loadFromTTF("font/zekton free.ttf", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'", 30)
+			font:loadFromTTF("font/NotoSans-Regular.ttf", 30)
 			
 			textbox = MOAITextBox.new ()
 			textbox:setRect(-0.5 * window.resolution.x, -0.5 * window.resolution.y, 0.5 * window.resolution.x, 0.5 * window.resolution.y)

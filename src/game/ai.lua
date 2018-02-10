@@ -504,7 +504,7 @@ end
 function AI:showPoints()
 	-- debug function
 	local font = MOAIFont.new ()
-	font:loadFromTTF("font/zekton free.ttf", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'", 25)
+	font:loadFromTTF("font/NotoSans-Regular.ttf", 25)
 	
 	for i = 1, table.getn(self.texts), 1 do
 		window.interface.layer:removeProp(self.texts[i])
@@ -534,7 +534,7 @@ end
 function AI:showAnalysisDuration(duration)
 	-- debug function
 	local font = MOAIFont.new ()
-	font:loadFromTTF("font/zekton free.ttf", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'.", 25)
+	font:loadFromTTF("font/NotoSans-Regular.ttf", 25)
 	
 	if self.duration ~= nil then
 		window.interface.layer:removeProp(self.duration)

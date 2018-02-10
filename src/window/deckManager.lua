@@ -99,11 +99,8 @@ function DeckManager:new()
 	D.bigFont = 40
 	
 	-- fonts
-	D.fontArial = MOAIFont.new ()
-	D.fontArial:loadFromTTF("font/arial.ttf", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-ãõç", D.smallFont)
-	
-	D.fontZekton = MOAIFont.new()
-	D.fontZekton:loadFromTTF("font/zekton free.ttf", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-ãõç", D.smallFont)
+	D.fontNoto = MOAIFont.new()
+	D.fontNoto:loadFromTTF("font/NotoSans-Regular.ttf", D.smallFont)
 	
 	return D
 end

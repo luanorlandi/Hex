@@ -122,7 +122,7 @@ function Menu:newText(rect, textSize, text)
 
 	textbox:setTextSize(textSize * window.scale)
 	
-	textbox:setFont(window.deckManager.fontZekton)
+	textbox:setFont(window.deckManager.fontNoto)
 	textbox:setYFlip(true)
 	window.interface.layer:insertProp(textbox)
 	changePriority(textbox, "interface")

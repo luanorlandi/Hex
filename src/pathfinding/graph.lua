@@ -556,7 +556,7 @@ end
 function Graph:showDistance(dist)
 	-- debug
 	local font = MOAIFont.new ()
-	font:loadFromTTF("font/zekton free.ttf", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'", 25)
+	font:loadFromTTF("font/NotoSans-Regular.ttf", 25)
 	
 	for i = 1, table.getn(self.texts), 1 do
 		window.interface.layer:removeProp(self.texts[i])
