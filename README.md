@@ -1,31 +1,49 @@
 # Hex
 
-![](https://github.com/luanorlandi/Hex/blob/master/wiki/hex.png)
+![](wiki/hex.png)
 
 This is a game developed for mobile, browser and desktop.
 
-Check the [releases](https://github.com/luanorlandi/Hex/releases) tab and the [html host](https://luanorlandi.github.io/Hex/) here to play it.
+Check the [releases] tab for desktop and mobile versions.
+
+Check the [web version] to play it now in your browser. It's updated more frequently than the desktop and mobile versions.
 
 ## More than just a game
 
-Hex is also part of a scientific research project.
+Hex is also part of a scientific research project: Math and programming in Hex.
 
-The game was the developed (and being updated from time to time) applying math and basic programming concepts in computer science.
+The project had the objective of study and apply analytical geometry (and math, in general), Game Theory and artificial intelligence concepts on game development.
 
-The project Math and programming in Hex had the objective of study and apply analytical geometry (and math, in general), Game Theory and artificial intelligence concepts on game development.
+It's a different way to learn those field of study. You can check this [wiki page][wiki] to see for yourself and learn math and programming in an interesting way.
 
-It's a different way to learn those field of study. You can check this [wiki page](https://github.com/luanorlandi/Hex/wiki) to see for yourself and learn math and programming in a more interesting manner.
+There is also a portuguese pdf made at the end of the scientific research project, check it out [here][pdf].
 
-There is also a portuguese pdf made at the end of the scientific research project, check it out [here](https://github.com/luanorlandi/Hex/blob/master/wiki/Matem%C3%A1tica%20e%20programa%C3%A7%C3%A3o%20em%20Hex.pdf).
+![](wiki/screenshot.png)
 
-![](https://github.com/luanorlandi/Hex/blob/master/wiki/screenshot.png)
+## Contributing
+
+The game was developed (and being updated from time to time) with [MOAI][moai] and [Lua][lua].
+
+Have a look at the [CONTRIBUTING.md][contributing] file if you would like to contribute in the development.
 
 ## Credits
 
 - Development guided by Leandro Fiorini Aurichi
-- Project supported by [CNPq](http://cnpq.br/)
-- Developed with [MOAI](http://getmoai.com/)
-- Builded with [MoaiCLI](http://halfnelson.github.io/moaicli/)
+- Project supported by [CNPq][cnpq]
+- Developed with [MOAI][moai]
+- Builded with [MoaiCLI][moaicli]
 
 ## License
-[GPLv3](https://github.com/luanorlandi/Swift-Space-Battle/blob/master/LICENSE)
+
+[GPLv3][license]
+
+[releases]: https://github.com/luanorlandi/Hex/releases
+[web version]: https://luanorlandi.github.io/Hex/
+[contributing]: CONTRIBUTING.md
+[wiki]: https://github.com/luanorlandi/Hex/wiki
+[pdf]: https://github.com/luanorlandi/Hex/blob/master/wiki/Matem%C3%A1tica%20e%20programa%C3%A7%C3%A3o%20em%20Hex.pdf
+[moai]: http://moaiforge.com/
+[lua]: https://www.lua.org/
+[cnpq]: http://cnpq.br/
+[moaicli]: http://halfnelson.github.io/moaicli/
+[license]: LICENSE
