@@ -16,5 +16,6 @@ Varje tur kan du välja en oselected sexkant. Ej markerade hexagoner är vita.",
 \n \
 Spelläge: \n \
 \n \
+\n \
 Startspelare:"
 }

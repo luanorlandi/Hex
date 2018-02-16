@@ -21,5 +21,6 @@ Each turn will allow you to select one hexagon not yet selected, which is white.
 \n \
 Spielmodus: \n \
 \n \
+\n \
 Beginnender Spieler:"
 }

@@ -16,5 +16,6 @@ Setiap giliran, kamu hanya dapat memilih satu bidang segi enam, yaitu yang berwa
 \n \
 Modus permainan: \n \
 \n \
+\n \
 Permain pertama:"
 }

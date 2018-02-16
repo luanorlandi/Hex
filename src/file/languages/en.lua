@@ -16,5 +16,6 @@ Each turn will allow you to select one hexagon not yet selected, which is white.
 \n \
 Game mode: \n \
 \n \
+\n \
 Starting player:"
 }

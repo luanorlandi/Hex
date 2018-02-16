@@ -16,5 +16,6 @@ Chaque tour vous permet de sélectionner un hexagone libre en blanc.",
 \n \
 Mode de jeu: \n \
 \n \
+\n \
 Joueur de départ:"
 }

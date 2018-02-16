@@ -16,5 +16,6 @@ Obiectivul jocului este crearea unui drum al culorii tale, pentru a conecta marg
 \n \
 Mod de joc: \n \
 \n \
+\n \
 Jucătorul care începe:"
 }

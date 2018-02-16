@@ -16,5 +16,6 @@ Cada turno permite escolher um hexágono ainda não selecionado, em que é de co
 \n \
 Modo de jogo: \n \
 \n \
+\n \
 Jogador que inicia:"
 }

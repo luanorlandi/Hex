@@ -35,16 +35,16 @@ function GameInterface:new()
 	-- values related to screen size,
 	-- (1, 1) is the top right corner, (0, 0) the center
 
-	G.posBoardSize7x7 = Vector:new(-0.60, 0.40)
-	G.posBoardSize9x9 = Vector:new(-0.15, 0.40)
-	G.posBoardSize11x11 = Vector:new(0.30, 0.40)
+	G.posBoardSize7x7 = Vector:new(-0.60, 0.48)
+	G.posBoardSize9x9 = Vector:new(-0.15, 0.48)
+	G.posBoardSize11x11 = Vector:new(0.30, 0.48)
 	
-	G.posGameMode1 = Vector:new(-0.60, -0.07)
-	G.posGameMode2 = Vector:new(-0.15, -0.07)
-	G.posGameMode3 = Vector:new(0.30, -0.07)
+	G.posGameMode1 = Vector:new(-0.60, 0)
+	G.posGameMode2 = Vector:new(-0.15, 0)
+	G.posGameMode3 = Vector:new(0.30, 0)
 	
-	G.posStartingPlayer1 = Vector:new(-0.60, -0.55)
-	G.posStartingPlayer2 = Vector:new(-0.15, -0.55)
+	G.posStartingPlayer1 = Vector:new(-0.60, -0.52)
+	G.posStartingPlayer2 = Vector:new(-0.15, -0.52)
 	
 	G:calculateButtonsPos()
 	
@@ -255,9 +255,9 @@ function GameInterface:openNewGameMenu()
 	-----------------------------------------------------------------------------------------------------------------
 	
 	-- highlight square of the selected option
-	self.menu:newHighlight(Vector:new(1.0, 0.85))
-	self.menu:newHighlight(Vector:new(1.0, 0.45))
-	self.menu:newHighlight(Vector:new(1.1, 0.75))
+	self.menu:newHighlight(Vector:new(1.0, 1.0))
+	self.menu:newHighlight(Vector:new(1.0, 1.0))
+	self.menu:newHighlight(Vector:new(1.0, 1.0))
 	
 	-----------------------------------------------------------------------------------------------------------------
 	
@@ -276,7 +276,7 @@ function GameInterface:openNewGameMenu()
 	
 	-- button of 7x7 board
 	pos = self.posBoardSize7x7			-- related to window size
-	size = Vector:new(85, 85)
+	size = Vector:new(70, 70)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	
@@ -290,7 +290,7 @@ function GameInterface:openNewGameMenu()
 	
 	-- button of 9x9 board
 	pos = self.posBoardSize9x9			-- related to window size
-	size = Vector:new(85, 85)
+	size = Vector:new(70, 70)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	
@@ -304,7 +304,7 @@ function GameInterface:openNewGameMenu()
 	
 	-- button of 11x11 board
 	pos = self.posBoardSize11x11			-- related to window size
-	size = Vector:new(85, 85)
+	size = Vector:new(70, 70)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	
@@ -360,7 +360,7 @@ function GameInterface:openNewGameMenu()
 	
 	-- button horizontal starting player
 	pos = self.posStartingPlayer1			-- related to window size
-	size = Vector:new(100, 100)
+	size = Vector:new(90, 90)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	
@@ -374,7 +374,7 @@ function GameInterface:openNewGameMenu()
 	
 	-- button vertical starting player
 	pos = self.posStartingPlayer2			-- related to window size
-	size = Vector:new(100, 100)
+	size = Vector:new(90, 90)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	
@@ -388,7 +388,7 @@ function GameInterface:openNewGameMenu()
 	
 	-- button start new game
 	local pos = Vector:new(0.63, -0.5)			-- related to window size
-	local size = Vector:new(50, 50)
+	local size = Vector:new(45, 45)
 	local area = Rectangle:new(Vector:new(pos.x * window.resolution.x/2, pos.y * window.resolution.y/2),
 							   Vector:new(size.x * window.scale, size.y * window.scale))
 	

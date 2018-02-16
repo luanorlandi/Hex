@@ -94,8 +94,8 @@ function DeckManager:new()
 	D.startNewGame:setTexture("texture/interface/startNewGame.png")
 	
 	-- fonts size
-	D.smallFont = 20
-	D.mediumFont = 28
+	D.smallFont = 18
+	D.mediumFont = 22
 	D.bigFont = 40
 	
 	-- fonts

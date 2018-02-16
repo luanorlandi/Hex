@@ -16,5 +16,6 @@ Her turda oyuncu boş (Beyaz) bir altıgeni kendi rengine çevirme hakkına sahi
 \n \
 Oyun modu: \n \
 \n \
+\n \
 Ilk Oyuncu:"
 }

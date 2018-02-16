@@ -16,5 +16,6 @@ Cada turno se te permitirá seleccionar una casilla que todavía no esté selecc
 \n \
 Modo de juego: \n \
 \n \
+\n \
 Jugador que inicia:"
 }

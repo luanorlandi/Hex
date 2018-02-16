@@ -16,5 +16,6 @@ Každý tah ti povolí si vybrat jeden hexagon, který ještě nebyl vybrát a j
 \n \
 Režim hry: \n \
 \n \
+\n \
 Začínající hráč:"
 }

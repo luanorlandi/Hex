@@ -41,9 +41,9 @@ function Menu:new(type)
 	-- buttons highlight
 	M.highlights = {}
 	M.highlightPos = {}
-	M.highlightSize = Vector:new(100, 100)			-- 100 * window.scale
+	M.highlightSize = Vector:new(78, 78) -- 78 * window.scale
 	M.highlightDeck = window.deckManager.buttonHighlight
-	M.highlightAlpha = 0.4
+	M.highlightAlpha = 0.6
 	
 	M.hexLogoSize = Vector:new(156, 75)
 

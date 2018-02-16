@@ -16,5 +16,6 @@ Minden forduló elején kiválaszthatsz egy még nem választott hatszöget, ame
 \n \
 Játék mód: \n \
 \n \
+\n \
 Kezdö játékos:"
 }

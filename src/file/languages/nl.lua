@@ -16,5 +16,6 @@ Elke beurt kun je jezelf één witte zeshoek toe-eigenen door er op te klikken."
 \n \
 Spelmodus: \n \
 \n \
+\n \
 Eerste beurt:"
 }

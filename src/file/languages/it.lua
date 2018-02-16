@@ -16,5 +16,6 @@ Ad ogni turno sarà possibile selezionare una casella (esagono) di colore bianco
 \n \
 Modalità di gioco: \n \
 \n \
+\n \
 Giocatore d'inizio:"
 }
